@@ -33,7 +33,7 @@ class ActivityPage extends React.Component{
   }
 
   static navigationOptions = (props) => ({
-    title: "Workout"
+    title: props.navigation.getParam('title', "Workout")
   });
 
   /* -------------------------------
@@ -106,9 +106,6 @@ class ActivityPage extends React.Component{
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80} enabled>
         <ScrollView>
-          <View style={styles.activityContainer}>
-            <Text style={{fontWeight:'bold', color: '#ff7675', fontSize:20}}>{this.props.navigation.getParam('title', "Workout")}</Text>
-          </View>
           <View>
             <Image
               style={{alignSelf: 'stretch', height: 250}}

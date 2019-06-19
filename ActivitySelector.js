@@ -15,59 +15,28 @@ class ActivitySelector extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      exercises:[],
-      loggedIn: false,
-      loginText: "",
-      userId:""
+      exercises:[
+        {
+          title:"Benchpress",
+          sets : "",
+          reps : "",
+          weight: "",
+          notes: ""
+        },
+        {
+          title:"Benchpress"
+        },
+        {
+          title:"Benchpress"
+        },
+      ],
     }
-  }
-
-  getExercises(){
-    // get data and put it into the state
-    fetch("http://localhost:3000/routine/5b6e31ee4bce69a75ba58565").then((response)=>{
-      return response.json();
-    }).then((json)=>{
-      var exercises = [];
-      json.forEach((exercise)=>{
-        exercises.push(exercise)
-      });
-      this.setState({exercises:exercises});
-    }).catch(err=>{console.error(err);})
-  }
-
-  login(){
-    // pass credentials to server
-    axios.post("http://localhost:3000/login/email", {
-      data:this.state.loginText
-    }).then(res=>{
-      if(res.data.response){
-        this.setState({loggedIn: true, userId:res.data._id});
-      }
-      this.getExercises();
-    }).catch(function(err){
-      console.log(err);
-    })
   }
 
   render(){
     return(
       <View style={{marginBottom:100}}>
         <Text style={{marginBottom: 30, marginTop: 20, color: 'white', fontSize: 40, fontWeight: 'bold', alignSelf:'center'}}>Workout App</Text>
-
-        {!this.state.loggedIn && <View style={styles.login}>
-          <Text style={{color: 'white', fontSize: 20}}>Login</Text>
-          <TextInput style={styles.loginInput}
-          onChangeText={(text) => this.setState({loginText: text})}
-          autoCapitalize="none"
-          value={this.state.text}></TextInput>
-          <TouchableOpacity
-            style={styles.loginButton}
-            onPress={()=>this.login()}
-            >
-            <Text style={{color: '#ff7675', alignSelf: 'center'}}>Login</Text>
-          </TouchableOpacity>
-        </View>}
-
         <FlatList data={this.state.exercises}
           renderItem={({item})=><Activity navigation={this.props.navigation} userId={this.state.userId} exercise={item}
         />}

@@ -18,13 +18,12 @@ export default class SetContainer extends React.Component{
   render(){
     return(
       <View>
-
-        /* P R O M P T S -------------------------- */
-        // "set" prompt
           <Prompt
            inputPlaceholder = ""
            title="Input Sets"
+           onBackButtonPress={()=>{}}
            placeholder="How many sets?"
+           keyboardType="number-pad"
            isVisible={this.state.visiblePromptSets}
            onChangeText={(text) => {
              if(text.length<=3){
@@ -47,10 +46,11 @@ export default class SetContainer extends React.Component{
            }}
         />
 
-        // "reps" prompt
         <Prompt
          inputPlaceholder = ""
+         keyboardType="number-pad"
          title="Input Repetitions"
+         onBackButtonPress={()=>{}}
          placeholder="How many reps?"
          isVisible={this.state.visiblePromptReps}
          onChangeText={(text) => {
@@ -74,10 +74,11 @@ export default class SetContainer extends React.Component{
          }}
         />
 
-        // "weight" prompt
         <Prompt
          inputPlaceholder = ""
+         keyboardType="number-pad"
          title="Input Weight"
+         onBackButtonPress={()=>{}}
          placeholder="How much weight?"
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
@@ -101,10 +102,7 @@ export default class SetContainer extends React.Component{
          }}
       />
 
-      /* E N D  - P R O M P T S -------------------------- */
-      /* S E T  - D A T A ---------------------*/
         <View style={styles.setContainer}>
-          // "set" input
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptSets: true
           }))} style={styles.set}>
@@ -112,7 +110,6 @@ export default class SetContainer extends React.Component{
             <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.sets}</Text>
           </TouchableOpacity>
 
-          // "rep" input
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptReps: true
           }))} style={styles.set}>
@@ -120,7 +117,6 @@ export default class SetContainer extends React.Component{
             <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.reps}</Text>
           </TouchableOpacity>
 
-          // "weight" input
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptWeight: true
           }))} style={styles.set}>
@@ -128,7 +124,6 @@ export default class SetContainer extends React.Component{
             <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.weight}</Text>
           </TouchableOpacity>
         </View>
-        /* S E T  - D A T A ---------------------*/
       </View>
     )
   }

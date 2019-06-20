@@ -18,10 +18,6 @@ class ActivitySelector extends React.Component{
       exercises:[
         {
           title:"Benchpress",
-          sets : "",
-          reps : "",
-          weight: "",
-          notes: ""
         },
         {
           title:"Benchpress"
@@ -36,7 +32,6 @@ class ActivitySelector extends React.Component{
   render(){
     return(
       <View style={{marginBottom:100}}>
-        <Text style={{marginBottom: 30, marginTop: 20, color: 'white', fontSize: 40, fontWeight: 'bold', alignSelf:'center'}}>Workout App</Text>
         <FlatList data={this.state.exercises}
           renderItem={({item})=><Activity navigation={this.props.navigation} userId={this.state.userId} exercise={item}
         />}

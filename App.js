@@ -7,7 +7,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 class App extends React.Component {
   static navigationOptions = (props) => ({
-    title: "Your Personalized Workout"
+    title: "Gym Buddy"
   });
 
   render() {

@@ -1,6 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, FlatList, StyleSheet, Text, View } from 'react-native';
-import ActivityPage from './ActivityPage';
+import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 
 class Activity extends React.Component{
   constructor(props){

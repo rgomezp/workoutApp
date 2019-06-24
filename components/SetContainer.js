@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, TouchableOpacity, FlatList, StyleSheet, Text, View } from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import Prompt from 'react-native-prompt-crossplatform';
 
 export default class SetContainer extends React.Component{
@@ -15,6 +15,14 @@ export default class SetContainer extends React.Component{
     }
   }
 
+  saveData = async(key, text) =>{
+    try {
+      await AsyncStorage.setItem(key, text);
+    } catch (error) {
+      console.log("Error saving data:", error);
+    } 
+  }
+
   render(){
     return(
       <View>
@@ -27,8 +35,9 @@ export default class SetContainer extends React.Component{
            isVisible={this.state.visiblePromptSets}
            onChangeText={(text) => {
              if(text.length<=3){
+               this.saveData(this.props.exercise+":sets", text);
                this.setState({ sets: text });
-             }
+              }
            }}
            onCancel={() => {
              this.setState({
@@ -39,10 +48,6 @@ export default class SetContainer extends React.Component{
              this.setState({
                visiblePromptSets: false,
              });
-
-             /* this function updates the set data in the parent component, ready for submission */
-
-             this.props.updateSetFunction(this.state.sets, this.state.reps, this.state.weight);
            }}
         />
 
@@ -55,6 +60,7 @@ export default class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptReps}
          onChangeText={(text) => {
            if(text.length<=3){
+             this.saveData(this.props.exercise+":reps", text);
              this.setState({ reps: text });
            }
          }}
@@ -67,10 +73,6 @@ export default class SetContainer extends React.Component{
            this.setState({
              visiblePromptReps: false,
            });
-
-         /* this function updates the set data in the parent component, ready for submission */
-
-           this.props.updateSetFunction(this.state.sets, this.state.reps, this.state.weight);
          }}
         />
 
@@ -83,6 +85,7 @@ export default class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
            if(text.length<=3){
+             this.saveData(this.props.exercise+":weight", text);
              this.setState({ weight: text });
            }
          }}
@@ -95,10 +98,6 @@ export default class SetContainer extends React.Component{
            this.setState({
              visiblePromptWeight: false,
            });
-
-           /* this function updates the set data in the parent component, ready for submission */
-
-           this.props.updateSetFunction(this.state.sets, this.state.reps, this.state.weight);
          }}
       />
 

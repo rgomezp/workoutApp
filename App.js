@@ -1,9 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ActivitySelector from './ActivitySelector';
-import ActivityPage from './ActivityPage';
-import Activity from './Activity';
+import ActivitySelector from './components/ActivitySelector';
+import ActivityPage from './components/ActivityPage/ActivityPage';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import {whyDidYouUpdate} from 'why-did-you-update';
+
+// console.disableYellowBox = true;
+// whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
 class App extends React.Component {
   static navigationOptions = (props) => ({
@@ -38,3 +41,10 @@ const RootStack = createStackNavigator({
 
 
 export default createAppContainer(RootStack);
+
+
+
+// RESOURCES
+/*
+ Ejecting from Expo: https://medium.com/reactbrasil/being-free-from-expo-in-react-native-apps-310034a3729
+*/

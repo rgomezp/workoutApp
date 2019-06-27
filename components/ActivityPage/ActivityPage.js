@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage} from 'react-native';
 import SetContainer from '../SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
@@ -24,9 +24,31 @@ class ActivityPage extends React.Component{
       sets: props.navigation.getParam('sets'),
       reps: props.navigation.getParam('reps'),
       weight: props.navigation.getParam('weight'),
+      exercise:this.props.navigation.getParam('title', "Workout"),
       notes: "",
       oldNotes: props.navigation.getParam('notes', ""),
+      updateExercises: props.navigation.getParam('updateExercises')
     }
+  }
+
+  componentDidMount(){
+    console.log(this.state);
+  }
+
+  saveData = async(key, text) =>{
+    console.log("saving data:", key, text);
+    try {
+      await AsyncStorage.setItem(key, text);
+    } catch (error) {
+      console.log("Error saving data:", error);
+    } 
+  }
+
+  finish(){
+    const {navigate} = this.props.navigation;
+    this.saveData(this.state.exercise+":notes", this.state.notes);
+    this.state.updateExercises();
+    navigate('Home');
   }
 
   static navigationOptions = (props) => ({
@@ -41,7 +63,7 @@ class ActivityPage extends React.Component{
           <TrackingPanel/>
           {/*--------SETS---------*/}
           <SetContainer
-            exercise = {this.props.navigation.getParam('title', "Workout")}
+            exercise = {this.state.exercise}
             reps={this.state.reps}
             sets={this.state.sets}
             weight={this.state.weight}
@@ -60,7 +82,7 @@ class ActivityPage extends React.Component{
               onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
             />
           </View>
-          <TouchableOpacity style={styles.button} onPress={()=>{}}>
+          <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>
             <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>FINISH</Text>
           </TouchableOpacity>
         </ScrollView>

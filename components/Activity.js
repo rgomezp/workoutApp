@@ -13,6 +13,7 @@ class Activity extends React.Component{
       reps  : this.props.exercise.reps,
       weight: this.props.exercise.weight,
       notes : this.props.exercise.notes,
+      updateExercises : this.props.updateExercises
     });
     
     

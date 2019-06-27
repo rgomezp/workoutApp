@@ -47,4 +47,9 @@ export default createAppContainer(RootStack);
 // RESOURCES
 /*
  Ejecting from Expo: https://medium.com/reactbrasil/being-free-from-expo-in-react-native-apps-310034a3729
-*/
+ https://itnext.io/react-component-class-vs-stateless-component-e3797c7d23ab
+ https://medium.com/wix-engineering/two-mistakes-in-react-js-we-keep-doing-over-and-over-again-b1aea20fb3f0
+ https://facebook.github.io/react-native/docs/flatlist
+ https://medium.com/reactbrasil/being-free-from-expo-in-react-native-apps-310034a3729
+ https://github.com/stoffern/react-native-optimized-flatlist
+ */

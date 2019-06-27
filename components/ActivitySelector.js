@@ -2,6 +2,7 @@ import React from 'react';
 import {TouchableOpacity, FlatList, StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
 import Activity from './Activity';
 import {AsyncStorage} from 'react-native';
+import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 
 /*
  * ACTIVITY SELECTOR (HOME PAGE)
@@ -27,32 +28,43 @@ class ActivitySelector extends React.Component{
         },
       ],
     }
+    this.updateExercises = this.updateExercises.bind(this);
   }
 
-  async componentDidMount(){
+  async getExerciseData(exercise){
+    let title = exercise.title;
+    let sets = await this._retrieveData(title+":sets");
+    let reps = await this._retrieveData(title+":reps");
+    let weight = await this._retrieveData(title+":weight");
+    let notes = await this._retrieveData(title+":notes");
+    
+    await Promise.all([sets, reps, weight]).then((values) => {
+      return values;
+    }).then((values)=>{
+      sets = values[0];
+      reps = values[1];
+      weight = values[2];
+    });
+
+    exercise.sets = sets;
+    exercise.reps = reps;
+    exercise.weight = weight;
+    exercise.notes = notes;
+    return exercise;
+  }
+
+  updateExercises(){
     let exercises = this.state.exercises;
     for(let i=0; i<exercises.length; i++){
       let exercise = exercises[i];
-      let title = exercise.title;
-      let sets = await this._retrieveData(title+":sets");
-      let reps = await this._retrieveData(title+":reps");
-      let weight = await this._retrieveData(title+":weight");
-      
-      await Promise.all([sets, reps, weight]).then((values) => {
-        return values;
-      }).then((values)=>{
-        sets = values[0];
-        reps = values[1];
-        weight = values[2];
-      });
-
-      exercise.sets = sets;
-      exercise.reps = reps;
-      exercise.weight = weight;
+      exercise = this.getExerciseData(exercise);
       exercises[i] = exercise;
-      
       this.setState({exercises});
     }
+  }
+
+  componentDidMount(){
+    this.updateExercises();
   }
 
   _retrieveData = async (key) => {
@@ -70,7 +82,7 @@ class ActivitySelector extends React.Component{
   // https://facebook.github.io/react-native/docs/flatlist.html#getitemlayout to optimize the FlatList
 
   buildList = (iter) => {
-    return (<Activity navigation={this.props.navigation} exercise={iter.item}/>)
+    return (<Activity navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises}/>)
   }
 
   _keyExtractor = (item, index) => item.title;
@@ -78,10 +90,10 @@ class ActivitySelector extends React.Component{
   render(){
     return(
       <View>
-        <FlatList data={this.state.exercises}
+        <OptimizedFlatList data={this.state.exercises}
           renderItem={this.buildList}
         keyExtractor={this._keyExtractor}
-        ></FlatList>
+        ></OptimizedFlatList>
       </View>
     )
   }

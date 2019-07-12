@@ -21,6 +21,9 @@
     "react-native-optimized-flatlist": "^1.0.4",
     "react-native-prompt-crossplatform": "rgomezp/react-native-prompt-crossplatform#custom-keyboard",
     "react-navigation": "^3.0.9",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
     "why-did-you-update": "^1.0.6"
   },
   "devDependencies": {

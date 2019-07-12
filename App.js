@@ -1,48 +1,40 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ActivitySelector from './components/ActivitySelector';
+import ActivitySelector from './components/WorkoutSelector/ActivitySelector';
 import ActivityPage from './components/ActivityPage/ActivityPage';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './rootReducer';
 import {whyDidYouUpdate} from 'why-did-you-update';
 
 // console.disableYellowBox = true;
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
-class App extends React.Component {
-  static navigationOptions = (props) => ({
-    title: "Gym Buddy"
-  });
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <ActivitySelector navigation={this.props.navigation}/>
-      </View>
-    );
-  }
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#ff7675',
-    padding:10,
-  },
-});
+// create redux store
+const store = createStore(rootReducer, {});
 
 const RootStack = createStackNavigator({
   Home:{
-    screen: App
+    screen: ActivitySelector
   },
   Activity: {
     screen: ActivityPage
   },
 });
 
+let Navigation = createAppContainer(RootStack);
 
-export default createAppContainer(RootStack);
+export default class App extends React.Component {
 
-
+  render() {
+    return (
+      <Provider store={store}>
+        <Navigation />
+      </Provider>
+    );
+  }
+}
 
 // RESOURCES
 /*

@@ -1,8 +1,11 @@
 import React from 'react';
 import {TouchableOpacity, FlatList, StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
-import Activity from './Activity';
+import Activity from '../Activity';
 import {AsyncStorage} from 'react-native';
 import {OptimizedFlatList} from 'react-native-optimized-flatlist';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {loadDataIntoRedux} from './actions';
 
 /*
  * ACTIVITY SELECTOR (HOME PAGE)
@@ -13,6 +16,10 @@ import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 */
 
 class ActivitySelector extends React.Component{
+  static navigationOptions = (props) => ({
+    title: "Gym Buddy"
+  });
+  
   constructor(props){
     super(props);
     this.state = {
@@ -61,6 +68,9 @@ class ActivitySelector extends React.Component{
       exercises[i] = exercise;
       this.setState({exercises});
     }
+
+    // load into redux
+    loadDataIntoRedux(this.state.exercises);
   }
 
   componentDidMount(){
@@ -89,7 +99,7 @@ class ActivitySelector extends React.Component{
 
   render(){
     return(
-      <View>
+      <View style={styles.container}>
         <OptimizedFlatList data={this.state.exercises}
           renderItem={this.buildList}
         keyExtractor={this._keyExtractor}
@@ -99,7 +109,12 @@ class ActivitySelector extends React.Component{
   }
 }
 
-styles = {
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#ff7675',
+    padding:10,
+  },
   login:{
     alignItems: 'center'
   },
@@ -107,6 +122,14 @@ styles = {
   loginButton:{
     height: 40, backgroundColor: 'white', alignSelf: 'stretch', borderRadius: 50, marginTop: 10, padding: 10, marginLeft: 80, marginRight: 80
   }
-}
+});
 
-export default ActivitySelector;
+const mapStateToProps = (state) => ({
+  navigation: state.navigation.navigation
+})
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  loadDataIntoRedux
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivitySelector);

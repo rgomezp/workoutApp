@@ -4,15 +4,17 @@ import ActivitySelector from './components/WorkoutSelector/ActivitySelector';
 import ActivityPage from './components/ActivityPage/ActivityPage';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
+import {logger} from 'redux-logger';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {whyDidYouUpdate} from 'why-did-you-update';
 
 // console.disableYellowBox = true;
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
 // create redux store
-const store = createStore(rootReducer, {});
+const store = createStore(rootReducer, {}, composeWithDevTools(applyMiddleware(logger)));
 
 const RootStack = createStackNavigator({
   Home:{
@@ -26,7 +28,6 @@ const RootStack = createStackNavigator({
 let Navigation = createAppContainer(RootStack);
 
 export default class App extends React.Component {
-
   render() {
     return (
       <Provider store={store}>

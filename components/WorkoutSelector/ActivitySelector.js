@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  navigation: state.navigation.navigation
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

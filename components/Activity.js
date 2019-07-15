@@ -1,7 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux';
 
 class Activity extends React.Component{
   constructor(props){
@@ -14,7 +13,7 @@ class Activity extends React.Component{
 
   render(){
     return(
-      <TouchableOpacity style={styles.activityContainer} onPress={this.navigate}>
+      <TouchableOpacity style={styles.activityContainer} onPress={this.navigate.bind(this)}>
         <Text style={{color:'#ff7675', fontWeight:'bold'}}>{this.props.exercise.title}</Text>
       </TouchableOpacity>
     )
@@ -37,7 +36,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = (state) => ({
-  navigation: state.navigation.navigation
 });
 
 export default connect(mapStateToProps)(Activity);

@@ -31,9 +31,6 @@ class ActivityPage extends React.Component{
     }
   }
 
-  componentDidMount(){
-    console.log(this.state);
-  }
 
   saveData = async(key, text) =>{
     console.log("saving data:", key, text);

@@ -3,6 +3,8 @@ import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, 
 import SetContainer from '../SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux'; 
 
 /*
  * ACTIVITY PAGE
@@ -21,16 +23,32 @@ class ActivityPage extends React.Component{
       userId:props.navigation.getParam('userId'),
       sliderVal : 0,
       difficulty: "The workout I did was",
-      sets: props.navigation.getParam('sets'),
-      reps: props.navigation.getParam('reps'),
-      weight: props.navigation.getParam('weight'),
       exercise:this.props.navigation.getParam('title', "Workout"),
-      notes: "",
       oldNotes: props.navigation.getParam('notes', ""),
-      updateExercises: props.navigation.getParam('updateExercises')
     }
   }
 
+  fetchExerciseFromArray(title, array){
+    for(let i=0; i<array.length; i++){
+      if(array[i]['title'] == title){
+        return array[i];
+      }
+    }
+  }
+
+  componentDidMount(){
+    let exercise = this.fetchExerciseFromArray(this.state.exercise, this.props.exercises);
+    console.log("Ex:", exercise);
+
+    let {sets, reps, weight, notes} = exercise;
+    console.log(sets, reps, weight, notes);
+    this.setState({
+      sets,
+      reps,
+      weight,
+      notes
+    })
+  }
 
   saveData = async(key, text) =>{
     console.log("saving data:", key, text);
@@ -89,6 +107,12 @@ class ActivityPage extends React.Component{
   }
 }
 
+const mapStateToProps = (state) => ({
+  exercises : state.exercises.exercises
+});
+
+export default connect(mapStateToProps)(ActivityPage);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -127,5 +151,3 @@ const styles = StyleSheet.create({
     width: width
   }
 });
-
-export default ActivityPage;

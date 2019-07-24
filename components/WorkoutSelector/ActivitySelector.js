@@ -64,13 +64,14 @@ class ActivitySelector extends React.Component{
     let exercises = this.state.exercises;
     for(let i=0; i<exercises.length; i++){
       let exercise = exercises[i];
-      exercise = this.getExerciseData(exercise);
-      exercises[i] = exercise;
-      this.setState({exercises});
+      this.getExerciseData(exercise).then(function(exercise){
+        exercises[i] = exercise;
+      });
     }
+    this.setState({exercises});
 
     // load into redux
-    loadDataIntoRedux(this.state.exercises);
+    this.props.loadDataIntoRedux(this.state.exercises);
   }
 
   componentDidMount(){

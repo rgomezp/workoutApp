@@ -8,7 +8,7 @@ class Activity extends React.Component{
   }
 
   navigate(){
-    this.props.navigation.navigate('Activity');
+    this.props.navigation.navigate('Activity', {title: this.props.exercise.title});
   }
 
   render(){

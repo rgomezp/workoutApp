@@ -1,8 +1,8 @@
 import {LOAD_DATA_INTO_REDUX} from './actions';
 
-const initialState = {exercises: undefined};
+const initialState = {};
 
-function workoutSelectorReducer(state = initialState, action) {
+function exercises(state = initialState, action) {
   const { type, data } = action;
   switch (type) {
     case LOAD_DATA_INTO_REDUX:
@@ -13,4 +13,4 @@ function workoutSelectorReducer(state = initialState, action) {
   }
 }
 
-export {workoutSelectorReducer};
+export {exercises};

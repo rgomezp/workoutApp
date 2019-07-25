@@ -1,6 +1,6 @@
 import React from 'react';
 import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage} from 'react-native';
-import SetContainer from '../SetContainer';
+import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
 import { connect } from 'react-redux';
@@ -28,27 +28,6 @@ class ActivityPage extends React.Component{
     }
   }
 
-  fetchExerciseFromArray(title, array){
-    for(let i=0; i<array.length; i++){
-      if(array[i]['title'] == title){
-        return array[i];
-      }
-    }
-  }
-
-  componentDidMount(){
-    let exercise = this.fetchExerciseFromArray(this.state.exercise, this.props.exercises);
-    console.log("Ex:", exercise);
-
-    let {sets, reps, weight, notes} = exercise;
-    console.log(sets, reps, weight, notes);
-    this.setState({
-      sets,
-      reps,
-      weight,
-      notes
-    })
-  }
 
   saveData = async(key, text) =>{
     console.log("saving data:", key, text);
@@ -78,10 +57,8 @@ class ActivityPage extends React.Component{
           <TrackingPanel/>
           {/*--------SETS---------*/}
           <SetContainer
-            exercise = {this.state.exercise}
-            reps={this.state.reps}
-            sets={this.state.sets}
-            weight={this.state.weight}
+            title = {this.state.exercise}
+            exerciseData = {this.props.exercises}
           />
           <View style={{padding: 10}}>
             <DifficultySlider/>

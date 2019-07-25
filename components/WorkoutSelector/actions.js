@@ -1,4 +1,3 @@
-
 const LOAD_DATA_INTO_REDUX = 'LOAD_DATA_INTO_REDUX';
 
 function loadDataIntoRedux(data){

@@ -1,17 +1,40 @@
 import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage} from 'react-native';
 import Prompt from 'react-native-prompt-crossplatform';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {holdingArea} from '../actions';
 
-export default class SetContainer extends React.Component{
+class SetContainer extends React.Component{
   constructor(props){
     super(props);
     this.state = {
       visiblePromptSets   : false,
       visiblePromptWeight : false,
       visiblePromptReps   : false,
-      sets    : this.props.sets,
-      weight  : this.props.weight,
-      reps    : this.props.reps
+      sets    : "",
+      weight  : "",
+      reps    : ""
+    }
+  }
+  
+  componentDidMount(){
+    let exercise = this.fetchExerciseFromArray(this.props.title, this.props.exerciseData);
+    let {sets, reps, weight, notes} = exercise;
+
+    this.setState({
+      sets,
+      reps,
+      weight,
+      notes
+    })
+  }
+
+  fetchExerciseFromArray(title, array){
+    for(let i=0; i<array.length; i++){
+      if(array[i]['title'] == title){
+        return array[i];
+      }
     }
   }
 
@@ -27,6 +50,7 @@ export default class SetContainer extends React.Component{
     return(
       <View>
           <Prompt
+         autoFocus = {true}
            inputPlaceholder = ""
            title="Input Sets"
            onBackButtonPress={()=>{}}
@@ -35,8 +59,8 @@ export default class SetContainer extends React.Component{
            isVisible={this.state.visiblePromptSets}
            onChangeText={(text) => {
              if(text.length<=3){
-               this.saveData(this.props.exercise+":sets", text);
                this.setState({ sets: text });
+               this.props.holdingArea({sets: text});
               }
            }}
            onCancel={() => {
@@ -52,6 +76,7 @@ export default class SetContainer extends React.Component{
         />
 
         <Prompt
+         autoFocus = {true}
          inputPlaceholder = ""
          keyboardType="number-pad"
          title="Input Repetitions"
@@ -60,8 +85,8 @@ export default class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptReps}
          onChangeText={(text) => {
            if(text.length<=3){
-             this.saveData(this.props.exercise+":reps", text);
              this.setState({ reps: text });
+             this.props.holdingArea({reps: text});
            }
          }}
          onCancel={() => {
@@ -77,6 +102,7 @@ export default class SetContainer extends React.Component{
         />
 
         <Prompt
+         autoFocus = {true}
          inputPlaceholder = ""
          keyboardType="number-pad"
          title="Input Weight"
@@ -85,8 +111,8 @@ export default class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
            if(text.length<=3){
-             this.saveData(this.props.exercise+":weight", text);
              this.setState({ weight: text });
+             this.props.holdingArea({weight: text});
            }
          }}
          onCancel={() => {
@@ -127,6 +153,12 @@ export default class SetContainer extends React.Component{
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  holdingArea
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(SetContainer);
 
 const styles = StyleSheet.create({
   setContainer:{

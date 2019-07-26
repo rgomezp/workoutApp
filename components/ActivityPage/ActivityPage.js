@@ -48,7 +48,7 @@ class ActivityPage extends React.Component{
     const {reps} = this.props.holdingArea;
     const {sets} = this.props.holdingArea;
     const {weight} = this.props.holdingArea;
-    const notes = this.state.notes;
+    const notes = this.state.notes ? this.state.notes : this.state.oldNotes ;
 
     this.saveData(this.state.title+":notes", notes);
     this.saveData(this.state.title+":reps", reps);
@@ -82,15 +82,10 @@ class ActivityPage extends React.Component{
           <View style={{padding: 10}}>
             <DifficultySlider/>
           </View>
-
           <View style={{alignSelf:'stretch', padding: 10}}>
-            <Text style={{fontWeight: 'bold'}}>My notes from last time:</Text>
-            <Text style={{color: 'grey'}}>{this.state.oldNotes}</Text>
-          </View>
-          <View style={{alignSelf:'stretch', padding: 10, marginBottom: 10}}>
             <Text style={{fontWeight: 'bold'}}>Notes:</Text>
-            <TextInput multiline={true} numberOfLines={4}
-              onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
+            <TextInput multiline={true} numberOfLines={3}
+              onChangeText={(text) => this.setState({notes: text})} value={this.state.oldNotes} placeholder="Tap to write"
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>

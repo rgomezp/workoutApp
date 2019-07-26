@@ -12,9 +12,6 @@ class SetContainer extends React.Component{
       visiblePromptSets   : false,
       visiblePromptWeight : false,
       visiblePromptReps   : false,
-      sets    : "",
-      weight  : "",
-      reps    : ""
     }
   }
   
@@ -22,6 +19,11 @@ class SetContainer extends React.Component{
     let exercise = this.fetchExerciseFromArray(this.props.title, this.props.exerciseData);
     let {sets, reps, weight, notes} = exercise;
 
+    // initial load: puts into holding area for saving
+    this.props.holdingArea({reps});
+    this.props.holdingArea({sets});
+    this.props.holdingArea({weight});
+    
     this.setState({
       sets,
       reps,
@@ -36,14 +38,6 @@ class SetContainer extends React.Component{
         return array[i];
       }
     }
-  }
-
-  saveData = async(key, text) =>{
-    try {
-      await AsyncStorage.setItem(key, text);
-    } catch (error) {
-      console.log("Error saving data:", error);
-    } 
   }
 
   render(){

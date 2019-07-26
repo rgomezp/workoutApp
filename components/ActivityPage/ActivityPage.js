@@ -4,7 +4,6 @@ import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
 import { connect } from 'react-redux';
-import {bindActionCreators} from 'redux'; 
 
 /*
  * ACTIVITY PAGE
@@ -23,14 +22,26 @@ class ActivityPage extends React.Component{
       userId:props.navigation.getParam('userId'),
       sliderVal : 0,
       difficulty: "The workout I did was",
-      exercise:this.props.navigation.getParam('title', "Workout"),
-      oldNotes: props.navigation.getParam('notes', ""),
+      title:this.props.navigation.getParam('title', "Workout"),
+      notes : "",
+      oldNotes: ""
     }
   }
 
+  componentDidMount(){
+    let exercise = this.fetchExerciseFromArray(this.state.title, this.props.exercises);
+    this.setState({oldNotes: exercise.notes});
+  }
+  
+  fetchExerciseFromArray(title, array){
+    for(let i=0; i<array.length; i++){
+      if(array[i]['title'] == title){
+        return array[i];
+      }
+    }
+  }
 
   saveData = async(key, text) =>{
-    console.log("saving data:", key, text);
     try {
       await AsyncStorage.setItem(key, text);
     } catch (error) {
@@ -40,8 +51,14 @@ class ActivityPage extends React.Component{
 
   finish(){
     const {navigate} = this.props.navigation;
-    this.saveData(this.state.exercise+":notes", this.state.notes);
-    this.state.updateExercises();
+    const {reps} = this.props.holdingArea;
+    const {sets} = this.props.holdingArea;
+    const {weight} = this.props.holdingArea;
+
+    this.saveData(this.state.title+":notes", this.state.notes);
+    this.saveData(this.state.title+":reps", reps);
+    this.saveData(this.state.title+":sets", sets);
+    this.saveData(this.state.title+":weight", weight);
     navigate('Home');
   }
 
@@ -57,7 +74,7 @@ class ActivityPage extends React.Component{
           <TrackingPanel/>
           {/*--------SETS---------*/}
           <SetContainer
-            title = {this.state.exercise}
+            title = {this.state.title}
             exerciseData = {this.props.exercises}
           />
           <View style={{padding: 10}}>
@@ -75,7 +92,7 @@ class ActivityPage extends React.Component{
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>
-            <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>FINISH</Text>
+            <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>SAVE</Text>
           </TouchableOpacity>
         </ScrollView>
         </KeyboardAvoidingView>
@@ -85,7 +102,8 @@ class ActivityPage extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-  exercises : state.exercises.exercises
+  exercises : state.exercises.exercises,
+  holdingArea : state.holdingArea
 });
 
 export default connect(mapStateToProps)(ActivityPage);

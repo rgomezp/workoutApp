@@ -23,17 +23,17 @@ class ActivitySelector extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      exercises:[
-        {
+      exercises:{
+        "Benchpress":{
           title:"Benchpress",
         },
-        {
+        "Dumbell Press":{
           title:"Dumbell Press"
         },
-        {
+        "Bench":{
           title:"Bench"
         },
-      ],
+      }
     }
     this.updateExercises = this.updateExercises.bind(this);
   }
@@ -61,7 +61,7 @@ class ActivitySelector extends React.Component{
   }
 
   updateExercises(){
-    let exercises = this.state.exercises;
+    let exercises = Object.values(this.state.exercises);
     for(let i=0; i<exercises.length; i++){
       let exercise = exercises[i];
       this.getExerciseData(exercise).then(function(exercise){
@@ -101,7 +101,7 @@ class ActivitySelector extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <OptimizedFlatList data={this.state.exercises}
+        <OptimizedFlatList data={Object.values(this.state.exercises)}
           renderItem={this.buildList}
         keyExtractor={this._keyExtractor}
         ></OptimizedFlatList>

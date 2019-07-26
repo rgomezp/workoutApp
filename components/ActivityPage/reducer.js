@@ -1,11 +1,11 @@
-import {LOAD_DATA_INTO_REDUX} from './actions';
+import {UPDATE_DATA_IN_REDUX} from './actions';
 
 const initialState = {};
 
 function exercises(state = initialState, action) {
   const { type, data } = action;
   switch (type) {
-    case LOAD_DATA_INTO_REDUX:
+    case UPDATE_DATA_IN_REDUX:
       return {...state, ...data};
     default:
       return state;

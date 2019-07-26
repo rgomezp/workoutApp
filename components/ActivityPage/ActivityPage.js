@@ -4,6 +4,8 @@ import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
 import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {updateDataInRedux} from './actions';
 
 /*
  * ACTIVITY PAGE
@@ -29,18 +31,10 @@ class ActivityPage extends React.Component{
   }
 
   componentDidMount(){
-    let exercise = this.fetchExerciseFromArray(this.state.title, this.props.exercises);
+    let exercise = this.props.exercises[this.state.title];
     this.setState({oldNotes: exercise.notes});
   }
   
-  fetchExerciseFromArray(title, array){
-    for(let i=0; i<array.length; i++){
-      if(array[i]['title'] == title){
-        return array[i];
-      }
-    }
-  }
-
   saveData = async(key, text) =>{
     try {
       await AsyncStorage.setItem(key, text);
@@ -54,11 +48,19 @@ class ActivityPage extends React.Component{
     const {reps} = this.props.holdingArea;
     const {sets} = this.props.holdingArea;
     const {weight} = this.props.holdingArea;
+    const notes = this.state.notes;
 
-    this.saveData(this.state.title+":notes", this.state.notes);
+    this.saveData(this.state.title+":notes", notes);
     this.saveData(this.state.title+":reps", reps);
     this.saveData(this.state.title+":sets", sets);
     this.saveData(this.state.title+":weight", weight);
+
+    let exercises = this.props.exercises;
+    let title = this.state.title;
+    let exercise = {title, notes, reps, sets, weight};
+    exercises[title] = exercise;
+
+    this.props.updateDataInRedux(exercises);
     navigate('Home');
   }
 
@@ -75,7 +77,7 @@ class ActivityPage extends React.Component{
           {/*--------SETS---------*/}
           <SetContainer
             title = {this.state.title}
-            exerciseData = {this.props.exercises}
+            exercises = {this.props.exercises}
           />
           <View style={{padding: 10}}>
             <DifficultySlider/>
@@ -102,11 +104,15 @@ class ActivityPage extends React.Component{
 }
 
 const mapStateToProps = (state) => ({
-  exercises : state.exercises.exercises,
+  exercises : state.exercises,
   holdingArea : state.holdingArea
 });
 
-export default connect(mapStateToProps)(ActivityPage);
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateDataInRedux
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage);
 
 const styles = StyleSheet.create({
   container: {

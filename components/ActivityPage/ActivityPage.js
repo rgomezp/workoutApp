@@ -26,13 +26,12 @@ class ActivityPage extends React.Component{
       difficulty: "The workout I did was",
       title:this.props.navigation.getParam('title', "Workout"),
       notes : "",
-      oldNotes: ""
     }
   }
 
   componentDidMount(){
     let exercise = this.props.exercises[this.state.title];
-    this.setState({oldNotes: exercise.notes});
+    this.setState({notes: exercise.notes});
   }
   
   saveData = async(key, text) =>{
@@ -48,7 +47,7 @@ class ActivityPage extends React.Component{
     const {reps} = this.props.holdingArea;
     const {sets} = this.props.holdingArea;
     const {weight} = this.props.holdingArea;
-    const notes = this.state.notes ? this.state.notes : this.state.oldNotes ;
+    const notes = this.state.notes;
 
     this.saveData(this.state.title+":notes", notes);
     this.saveData(this.state.title+":reps", reps);
@@ -71,7 +70,7 @@ class ActivityPage extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={80} enabled>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>
           <TrackingPanel/>
           {/*--------SETS---------*/}
@@ -85,7 +84,7 @@ class ActivityPage extends React.Component{
           <View style={{alignSelf:'stretch', padding: 10}}>
             <Text style={{fontWeight: 'bold'}}>Notes:</Text>
             <TextInput multiline={true} numberOfLines={3}
-              onChangeText={(text) => this.setState({notes: text})} value={this.state.oldNotes} placeholder="Tap to write"
+              onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
             />
           </View>
           <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>

@@ -30,10 +30,9 @@ class ActivityPage extends React.Component{
 
   componentDidMount() {
     let exercise = this.props.exercises[this.state.title];
-
-    // TO DO: get history
-
-    this.setState({notes: exercise.notes});
+    let historyArr = this.props.history[this.state.title];     // the exercise's history array
+    console.log("on mount:", historyArr);
+    this.setState({notes: exercise.notes, historyArr});
   }
   
   saveData = async(key, text) =>{
@@ -58,8 +57,14 @@ class ActivityPage extends React.Component{
     
     // save to history
     let date = new Date();
-    let history = [{sets:"3", reps: "10", weight:"150", date: date}];
-    this.saveData(this.state.title+":history", JSON.stringify(history));
+    let history = {sets, reps, weight, date: date};
+    console.log(this.state.historyArr);
+    let historyArr = this.state.historyArr;
+    if (historyArr.length = 5) {
+      historyArr = this.state.historyArr.slice(1);
+    }
+    historyArr.push(history);
+    this.saveData(this.state.title+":history", JSON.stringify(historyArr));
 
     let exercises = this.props.exercises;
     let title = this.state.title;
@@ -106,7 +111,8 @@ class ActivityPage extends React.Component{
 
 const mapStateToProps = (state) => ({
   exercises : state.exercises,
-  holdingArea : state.holdingArea
+  holdingArea : state.holdingArea,
+  history : state.history
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

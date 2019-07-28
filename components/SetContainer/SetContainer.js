@@ -3,7 +3,7 @@ import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage} from 'react-nati
 import Prompt from 'react-native-prompt-crossplatform';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {holdingArea} from '../actions';
+import {holdingArea} from './actions';
 
 class SetContainer extends React.Component{
   constructor(props){

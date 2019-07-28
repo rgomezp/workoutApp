@@ -9,6 +9,8 @@ function holdingArea(data){
     return { type : SAVE_REPS_TO_HOLDING_AREA, data : data }
   } else if (data.weight) {
     return { type : SAVE_WEIGHT_TO_HOLDING_AREA, data : data }
+  } else {
+    return { type : 'DEFAULT'}
   }
 }
 

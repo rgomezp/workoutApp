@@ -65,13 +65,13 @@ class WorkoutSelector extends React.Component{
     let parsedHistory = JSON.parse(history);
 
     return new Promise((resolve,reject) => {
-      if(parsedHistory) {
-        resolve(parsedHistory[title])
+      if(parsedHistory && Array.isArray(parsedHistory)) {
+        resolve(parsedHistory)
       } else {
         // populate history
         history = [{sets:"", reps: "", weight:"", date:""}];
         this.saveData(title+":history", JSON.stringify(history));
-        reject("Populating history data");
+        resolve(history);
       };
     });
   }
@@ -101,6 +101,7 @@ class WorkoutSelector extends React.Component{
         console.log(error);
       }
     }
+    console.log("hist:", allHistory);
     this.setState({exercises, allHistory});
 
     // load into redux

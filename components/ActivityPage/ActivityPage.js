@@ -16,7 +16,6 @@ import {updateDataInRedux} from './actions';
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-
 class ActivityPage extends React.Component{
   constructor(props){
     super(props);
@@ -25,12 +24,15 @@ class ActivityPage extends React.Component{
       sliderVal : 0,
       difficulty: "The workout I did was",
       title:this.props.navigation.getParam('title', "Workout"),
-      notes : "",
+      notes : ""
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     let exercise = this.props.exercises[this.state.title];
+
+    // TO DO: get history
+
     this.setState({notes: exercise.notes});
   }
   
@@ -42,7 +44,7 @@ class ActivityPage extends React.Component{
     } 
   }
 
-  finish(){
+  finish() {
     const {navigate} = this.props.navigation;
     const {reps} = this.props.holdingArea;
     const {sets} = this.props.holdingArea;
@@ -53,6 +55,11 @@ class ActivityPage extends React.Component{
     this.saveData(this.state.title+":reps", reps);
     this.saveData(this.state.title+":sets", sets);
     this.saveData(this.state.title+":weight", weight);
+    
+    // save to history
+    let date = new Date();
+    let history = [{sets:"3", reps: "10", weight:"150", date: date}];
+    this.saveData(this.state.title+":history", JSON.stringify(history));
 
     let exercises = this.props.exercises;
     let title = this.state.title;
@@ -68,7 +75,7 @@ class ActivityPage extends React.Component{
   });
 
   render(){
-    return(
+    return (
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>

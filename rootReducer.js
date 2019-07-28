@@ -1,10 +1,11 @@
 import { combineReducers } from 'redux';
-import {exercises} from './components/WorkoutSelector/reducer';
+import {exercises, history} from './components/WorkoutSelector/reducer';
 import {holdingArea} from './components/reducer';
 
 const rootReducer = combineReducers({
   exercises,
-  holdingArea
+  holdingArea,
+  history
 });
 
 export default rootReducer;

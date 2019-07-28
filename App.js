@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import ActivitySelector from './components/WorkoutSelector/ActivitySelector';
+import WorkoutSelector from './components/WorkoutSelector/WorkoutSelector';
 import ActivityPage from './components/ActivityPage/ActivityPage';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
@@ -20,7 +20,7 @@ const store = createStore(rootReducer, devToolsEnhancer({realtime:true}));
 
 const RootStack = createStackNavigator({
   Home:{
-    screen: ActivitySelector
+    screen: WorkoutSelector
   },
   Activity: {
     screen: ActivityPage

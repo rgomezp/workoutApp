@@ -5,7 +5,7 @@ import {AsyncStorage} from 'react-native';
 import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {loadDataIntoRedux} from './actions';
+import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';
 
 /*
  * ACTIVITY SELECTOR (HOME PAGE)
@@ -15,7 +15,7 @@ import {loadDataIntoRedux} from './actions';
  * passes state into the Activity component found on Activity.js (including userId)
 */
 
-class ActivitySelector extends React.Component{
+class WorkoutSelector extends React.Component{
   static navigationOptions = (props) => ({
     title: "Gym Buddy"
   });
@@ -27,19 +27,18 @@ class ActivitySelector extends React.Component{
         "Benchpress":{
           title:"Benchpress",
         },
-        "Dumbell Press":{
-          title:"Dumbell Press"
+        "Curls":{
+          title:"Curls",
         },
-        "Bench":{
-          title:"Bench"
+        "Crunches":{
+          title:"Crunches",
         },
       }
     }
     this.updateExercises = this.updateExercises.bind(this);
   }
 
-  async getExerciseData(exercise){
-    let title = exercise.title;
+  async getExerciseData(title){
     let sets = await this._retrieveData(title+":sets");
     let reps = await this._retrieveData(title+":reps");
     let weight = await this._retrieveData(title+":weight");
@@ -52,26 +51,61 @@ class ActivitySelector extends React.Component{
       reps = values[1];
       weight = values[2];
     });
-
+    let exercise = {title};
     exercise.sets = sets;
     exercise.reps = reps;
     exercise.weight = weight;
     exercise.notes = notes;
-    return exercise;
+    return new Promise(resolve => {resolve(exercise)});
   }
 
-  updateExercises(){
-    let exercises = Object.values(this.state.exercises);
-    for(let i=0; i<exercises.length; i++){
-      let exercise = exercises[i];
-      this.getExerciseData(exercise).then(function(exercise){
-        exercises[i] = exercise;
-      });
+  async getExerciseHistory(exercise){
+    let {title} = exercise;
+    let history = await this._retrieveData(title+":history");
+    let parsedHistory = JSON.parse(history);
+
+    return new Promise((resolve,reject) => {
+      if(parsedHistory) {
+        resolve(parsedHistory[title])
+      } else {
+        // populate history
+        history = [{sets:"", reps: "", weight:"", date:""}];
+        this.saveData(title+":history", JSON.stringify(history));
+        reject("Populating history data");
+      };
+    });
+  }
+  
+  saveData = async(key, text) =>{
+    try {
+      await AsyncStorage.setItem(key, text);
+    } catch (error) {
+      console.log("Error saving data:", error);
+    } 
+  }
+
+  async updateExercises(){
+    let exerciseArr = Object.values(this.state.exercises);
+    let exercises = {};
+    let allHistory = {};
+    for(let i=0; i<exerciseArr.length; i++){
+      let title = exerciseArr[i].title;
+      let exercise = exerciseArr[i];
+      let exerciseData = await this.getExerciseData(title);
+      exercises[title] = exerciseData;
+     
+      try {
+        let history = await this.getExerciseHistory(exercise);
+        allHistory[exercise.title] = history;
+      } catch(error) {
+        console.log(error);
+      }
     }
-    this.setState({exercises});
+    this.setState({exercises, allHistory});
 
     // load into redux
     this.props.loadDataIntoRedux(this.state.exercises);
+    this.props.loadHistoryIntoRedux(this.state.allHistory);
   }
 
   componentDidMount(){
@@ -129,7 +163,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  loadDataIntoRedux
+  loadDataIntoRedux,
+  loadHistoryIntoRedux
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActivitySelector);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutSelector);

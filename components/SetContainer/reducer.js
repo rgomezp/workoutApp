@@ -1,4 +1,4 @@
-import {SAVE_SETS_TO_HOLDING_AREA, SAVE_REPS_TO_HOLDING_AREA, SAVE_WEIGHT_TO_HOLDING_AREA} from './actions';
+import {SAVE_SETS_TO_HOLDING_AREA, SAVE_REPS_TO_HOLDING_AREA, SAVE_WEIGHT_TO_HOLDING_AREA, SAVE_DIFFICULTY_TO_HOLDING_AREA} from './actions';
 
 /**
  * Stores exercise data in redux temporarily to be saved to local storage
@@ -14,6 +14,8 @@ function holdingArea(state = {}, action) {
       return {...state, reps: data.reps}
     case SAVE_WEIGHT_TO_HOLDING_AREA:
       return {...state, weight: data.weight}
+    case SAVE_DIFFICULTY_TO_HOLDING_AREA: 
+      return {...state, difficulty: data.difficulty}
     default:
       return state;
   }

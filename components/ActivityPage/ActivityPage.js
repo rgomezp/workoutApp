@@ -5,7 +5,7 @@ import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {updateDataInRedux} from './actions';
+import {updateDataInRedux, updateHistoryInRedux} from './actions';
 
 /*
  * ACTIVITY PAGE
@@ -22,7 +22,6 @@ class ActivityPage extends React.Component{
     this.state={
       userId:props.navigation.getParam('userId'),
       sliderVal : 0,
-      difficulty: "The workout I did was",
       title:this.props.navigation.getParam('title', "Workout"),
       notes : ""
     }
@@ -31,7 +30,6 @@ class ActivityPage extends React.Component{
   componentDidMount() {
     let exercise = this.props.exercises[this.state.title];
     let historyArr = this.props.history[this.state.title];     // the exercise's history array
-    console.log("on mount:", historyArr);
     this.setState({notes: exercise.notes, historyArr});
   }
   
@@ -57,14 +55,18 @@ class ActivityPage extends React.Component{
     
     // save to history
     let date = new Date();
-    let history = {sets, reps, weight, date: date};
-    console.log(this.state.historyArr);
+    let difficulty = this.props.holdingArea.difficulty;
+    let history = {sets, reps, weight, difficulty, date: date};
     let historyArr = this.state.historyArr;
-    if (historyArr.length = 5) {
+
+    if (historyArr.length = 14) {
       historyArr = this.state.historyArr.slice(1);
     }
     historyArr.push(history);
+
+    // TO DO: only save/update if on a new workout/day (figure out later) 
     this.saveData(this.state.title+":history", JSON.stringify(historyArr));
+    this.props.updateHistoryInRedux({[this.state.title]:historyArr});
 
     let exercises = this.props.exercises;
     let title = this.state.title;
@@ -116,7 +118,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateDataInRedux
+  updateDataInRedux,
+  updateHistoryInRedux
 }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage);

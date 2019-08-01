@@ -1,22 +1,28 @@
 import React, { Component } from 'react';
 import {View, Text} from 'react-native';
 import {Slider} from 'react-native-elements';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {holdingArea} from './SetContainer/actions';
 
 class DifficultySlider extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      difficulty : "Difficulty",
+      difficulty : "The workout I did was",
       sliderVal  : 0,
     }
   }
   
-  /* C H E C K - D I F F I C U L T Y
-  * used to check the slider value and update the difficulty description
-  */
+  /* check difficulty
+   * used to check the slider value and update the difficulty description
+   */
   checkDifficulty = (value) => {
+    let difficulty = Math.floor(value*10)+"";
+    this.props.holdingArea({difficulty});
+
     if(value <= .2){
-      this.setState({difficulty:(Math.floor(value*10))+": Pshhh. Piece of cake", sliderVal: value})
+      this.setState({difficulty: difficulty+": Pshhh. Piece of cake", sliderVal: value})
       return;
     }
     if(value > .2 && value < .5){
@@ -58,4 +64,8 @@ class DifficultySlider extends Component {
   }
 }
 
-export default DifficultySlider;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  holdingArea,
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(DifficultySlider);

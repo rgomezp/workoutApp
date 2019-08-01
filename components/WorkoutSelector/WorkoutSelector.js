@@ -101,7 +101,6 @@ class WorkoutSelector extends React.Component{
         console.log(error);
       }
     }
-    console.log("hist:", allHistory);
     this.setState({exercises, allHistory});
 
     // load into redux

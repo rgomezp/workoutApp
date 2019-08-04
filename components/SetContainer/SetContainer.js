@@ -53,8 +53,7 @@ class SetContainer extends React.Component{
            isVisible={this.state.visiblePromptSets}
            onChangeText={(text) => {
              if(text.length<=3){
-               this.setState({ sets: text });
-               this.props.holdingArea({sets: text});
+               this.setState({ tempSets: text });
               }
            }}
            onCancel={() => {
@@ -63,6 +62,9 @@ class SetContainer extends React.Component{
              });
            }}
            onSubmit={() => {
+             let sets = this.state.tempSets;
+             this.props.holdingArea({sets});
+             this.setState({sets});
              this.setState({
                visiblePromptSets: false,
              });
@@ -79,8 +81,7 @@ class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptReps}
          onChangeText={(text) => {
            if(text.length<=3){
-             this.setState({ reps: text });
-             this.props.holdingArea({reps: text});
+             this.setState({ tempReps: text });
            }
          }}
          onCancel={() => {
@@ -89,6 +90,9 @@ class SetContainer extends React.Component{
            });
          }}
          onSubmit={() => {
+           let reps = this.state.tempReps;
+           this.props.holdingArea({reps});
+           this.setState({reps});
            this.setState({
              visiblePromptReps: false,
            });
@@ -105,8 +109,7 @@ class SetContainer extends React.Component{
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
            if(text.length<=3){
-             this.setState({ weight: text });
-             this.props.holdingArea({weight: text});
+             this.setState({ tempWeight : text });
            }
          }}
          onCancel={() => {
@@ -115,6 +118,9 @@ class SetContainer extends React.Component{
            });
          }}
          onSubmit={() => {
+           let weight = this.state.tempWeight;
+           this.props.holdingArea({weight});
+           this.setState({weight});
            this.setState({
              visiblePromptWeight: false,
            });

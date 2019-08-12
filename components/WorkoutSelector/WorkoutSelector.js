@@ -27,12 +27,54 @@ class WorkoutSelector extends React.Component{
         "Benchpress":{
           title:"Benchpress",
         },
-        "Curls":{
-          title:"Curls",
+        "9,8 Curls":{
+          title:"9,8 Curls",
         },
-        "Crunches":{
-          title:"Crunches",
+        "Barbell Curls":{
+          title:"Barbell Curls",
         },
+        "Seated Shoulder Press":{
+          title:"Seated Shoulder Press"
+        },
+        "Hardgainer Shoulder":{
+          title:"Hardgainer Shoulder"
+        },
+        "Calve Raises":{
+          title: "Calve Raises"
+        },
+        "Dumbell Bench Press":{
+          title:"Dumbell Bench Press"
+        },
+        "Back Squats":{
+        title:"Back Squats"
+        },
+        "Front Squats":{
+          title:"Front Squats"
+        },
+        "Standing Squat Machine":{
+          title:"Standing Squat Machine"
+        },
+        "Sumo Dead Lifts":{
+          title:"Sumo Dead Lifts"
+        },
+        "Tricep Pulldowns":{
+          title:"Tricep Pulldowns"
+        },
+        "Overhead Tricep Extensions":{
+          title:"Overhead Tricep Extensions"
+        },
+        "Standing Cable Press":{
+          title:"Standing Cable Press"
+        },
+        "Incline Bench Press":{
+          title:"Incline Bench Press"
+        },
+        "Drag Curls":{
+          title:"Drag Curls"
+        },
+        "Cable Ab Pulldowns":{
+          title:"Cable Ab Pulldowns"
+        }
       }
     }
     this.updateExercises = this.updateExercises.bind(this);
@@ -147,7 +189,7 @@ class WorkoutSelector extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ff7675',
+    backgroundColor: '#4841BB',
     padding:10,
   },
   login:{

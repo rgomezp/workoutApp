@@ -56,8 +56,8 @@ class DifficultySlider extends Component {
           onSlidingComplete={(value) =>{
             this.checkDifficulty(value);
           }}
-          thumbTintColor='#ff7675'
-          trackStyle={{opacity:0.25, backgroundColor:'#ff7675'}}
+          thumbTintColor='#4841BB'
+          trackStyle={{opacity:0.25, backgroundColor:'#4841BB'}}
         />
       </View>
     );

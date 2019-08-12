@@ -16,23 +16,30 @@ const Panel = (props) => {
   let weights = [];
   let isEven = 0;
 
-  for(let i=0; i<history.length; i++){
-    let {date, weight} = history[i];
-    date = date.substr(1, date.length-1);
-    if(isEven){
-      date = date.substr(5,5).split("-").join("/");
-      
-      if(date[0]=="0"){
-        date = date.substr(1,4);
+  for(let i=0; i<14; i++){
+    if (history[i] && history[i].date){
+      let {date, weight} = history[i];
+
+      date = date.substr(1, date.length-1);
+      if(isEven){
+        date = date.substr(5,5).split("-").join("/");
+        
+        if(date[0]=="0"){
+          date = date.substr(1,4);
+        }
+        
+        labels.push(date);
+      }else{
+        labels.push("");
       }
-      
-      labels.push(date);
+      isEven = !isEven;
+      weights.push(weight);
     }else{
-      labels.push("");
+      labels.push('-/-');
+      weights.push(0);
     }
-    isEven = !isEven;
-    weights.push(weight);
   }
+  console.log(labels, weights);
 
   return (<View>
     <LineChart
@@ -47,8 +54,8 @@ const Panel = (props) => {
     yAxisLabel={'lbs '}
     chartConfig={{
       backgroundColor: 'white',
-      backgroundGradientFrom: '#ff7675',
-      backgroundGradientTo: '#ff7675',
+      backgroundGradientFrom: '#4841BB',
+      backgroundGradientTo: '#4841BB',
       decimalPlaces: 0, // optional, defaults to 2dp
       color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
     }}

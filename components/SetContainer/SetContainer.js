@@ -44,7 +44,8 @@ class SetContainer extends React.Component{
     return(
       <View>
           <Prompt
-         autoFocus = {true}
+           primaryColor="#4841BB"
+           autoFocus = {true}
            inputPlaceholder = ""
            title="Input Sets"
            onBackButtonPress={()=>{}}
@@ -72,6 +73,7 @@ class SetContainer extends React.Component{
         />
 
         <Prompt
+         primaryColor="#4841BB"
          autoFocus = {true}
          inputPlaceholder = ""
          keyboardType="number-pad"
@@ -100,6 +102,7 @@ class SetContainer extends React.Component{
         />
 
         <Prompt
+         primaryColor="#4841BB"
          autoFocus = {true}
          inputPlaceholder = ""
          keyboardType="number-pad"
@@ -131,22 +134,22 @@ class SetContainer extends React.Component{
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptSets: true
           }))} style={styles.set}>
-            <Text style={{fontSize: 15, color: '#ff7675'}}>SETS</Text>
-            <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.sets}</Text>
+            <Text style={{fontSize: 15, color: '#4841BB'}}>SETS</Text>
+            <Text style={{fontSize:30, fontWeight: 'bold', color: '#4841BB'}}>{this.state.sets}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptReps: true
           }))} style={styles.set}>
-            <Text style={{fontSize: 15, color: '#ff7675'}}>REPS</Text>
-            <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.reps}</Text>
+            <Text style={{fontSize: 15, color: '#4841BB'}}>REPS</Text>
+            <Text style={{fontSize:30, fontWeight: 'bold', color: '#4841BB'}}>{this.state.reps}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={()=>(this.setState({
             visiblePromptWeight: true
           }))} style={styles.set}>
-            <Text style={{fontSize: 15, color: '#ff7675'}}>WEIGHT</Text>
-            <Text style={{fontSize:30, fontWeight: 'bold', color: '#ff7675'}}>{this.state.weight}</Text>
+            <Text style={{fontSize: 15, color: '#4841BB'}}>WEIGHT</Text>
+            <Text style={{fontSize:30, fontWeight: 'bold', color: '#4841BB'}}>{this.state.weight}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -163,7 +166,7 @@ export default connect(null, mapDispatchToProps)(SetContainer);
 const styles = StyleSheet.create({
   setContainer:{
     borderTopWidth: 3,
-    borderColor: '#ff7675',
+    borderColor: '#4841BB',
     flexDirection: 'row',
     padding: 0
   },
@@ -173,8 +176,8 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     backgroundColor: 'white',
-    borderColor: '#ff7675',
-    borderWidth: 2,
+    borderColor: '#4841BB',
+    borderWidth: 3,
     margin: 10,
     borderRadius: 6
   }

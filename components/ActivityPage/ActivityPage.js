@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderBottomWidth: 3,
-    borderBottomColor: '#ff7675'
+    borderBottomColor: '#4841BB'
   },
   historyButton:{
     backgroundColor: '#FFC4C4',
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#ff7675',
+    backgroundColor: '#4841BB',
     margin: 10,
     borderRadius: 50,
     elevation:2
@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'absolute',
     opacity: .95,
-    backgroundColor: '#ff7675',
+    backgroundColor: '#4841BB',
     width: width
   }
 });

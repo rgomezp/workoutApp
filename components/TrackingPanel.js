@@ -50,18 +50,18 @@ class TrackingPanel extends Component {
 
 const styles = StyleSheet.create({
   historyButton:{
-    backgroundColor: '#FFC4C4',
+    backgroundColor: '#8E89DE',
     alignItems: 'center',
     padding:3
   },
   overlay:{
     flex: 1,
     position: 'absolute',
-    backgroundColor: '#ff7675',
+    backgroundColor: '#4841BB',
     width: width
   },
   textColor : {
-    color : '#ff7675',
+    color : '#4841BB',
     fontWeight: 'bold'
   }
 });

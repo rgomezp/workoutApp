@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Image, TouchableOpacity, Text, View, StyleSheet, Dimensions} from 'react-native';
-import {LineChart} from 'react-native-chart-kit';
 import Panel from './Panel';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
@@ -11,7 +12,7 @@ class TrackingPanel extends Component {
     super(props);
     this.state = {
       panelHeight : 0,
-      hide:1
+      hide:1,
     }
   }
 
@@ -26,20 +27,6 @@ class TrackingPanel extends Component {
   }
 
   render() {
-    const data = {
-      labels: [],
-      datasets: [{
-        data: [],
-        strokeWidth: 2 // optional
-      }]
-    }
-
-    const chartConfig = {
-      backgroundGradientFrom: '#1E2923',
-      backgroundGradientTo: '#08130D',
-      color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      strokeWidth: 2 // optional, default 3
-    }
     return (
       <View>
         <View>
@@ -48,7 +35,7 @@ class TrackingPanel extends Component {
             source={{uri:'https://cdn2.coachmag.co.uk/sites/coachmag/files/2017/05/bench-press_0.jpg'}}
             />
             <View style={[styles.overlay, {height: this.state.panelHeight},]}>
-              <Panel hide={this.state.hide}/>
+              <Panel hide={this.state.hide} history={this.props.history[this.props.title]}/>
             </View>
         </View>
         <View>
@@ -70,7 +57,6 @@ const styles = StyleSheet.create({
   overlay:{
     flex: 1,
     position: 'absolute',
-    opacity: .95,
     backgroundColor: '#ff7675',
     width: width
   },
@@ -80,4 +66,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default TrackingPanel;
+const mapStateToProps = (state) => ({
+  history : state.history
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+}, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(TrackingPanel);

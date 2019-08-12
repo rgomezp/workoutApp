@@ -56,7 +56,7 @@ class ActivityPage extends React.Component{
     // save to history
     let date = new Date();
     let difficulty = this.props.holdingArea.difficulty;
-    let history = {sets, reps, weight, difficulty, date: date};
+    let history = {sets, reps, weight, difficulty, date: JSON.stringify(date)};
     let historyArr = this.state.historyArr;
 
     if (historyArr.length = 14) {
@@ -86,7 +86,7 @@ class ActivityPage extends React.Component{
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>
-          <TrackingPanel/>
+          <TrackingPanel title={this.state.title}/>
           {/*--------SETS---------*/}
           <SetContainer
             title = {this.state.title}

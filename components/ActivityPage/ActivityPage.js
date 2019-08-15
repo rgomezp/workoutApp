@@ -3,6 +3,7 @@ import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, 
 import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
+import Clock from '../Clock';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
@@ -92,6 +93,7 @@ class ActivityPage extends React.Component{
             title = {this.state.title}
             exercises = {this.props.exercises}
           />
+          <Clock/>
           <View style={{padding: 10}}>
             <DifficultySlider/>
           </View>

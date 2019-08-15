@@ -39,7 +39,6 @@ const Panel = (props) => {
       weights.push(0);
     }
   }
-  console.log(labels, weights);
 
   return (<View>
     <LineChart

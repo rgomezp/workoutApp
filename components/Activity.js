@@ -13,25 +13,28 @@ class Activity extends React.Component{
 
   render(){
     return(
-      <TouchableOpacity style={styles.activityContainer} onPress={this.navigate.bind(this)}>
-        <Text style={{color:'#4841BB', fontWeight:'bold'}}>{this.props.exercise.title}</Text>
-      </TouchableOpacity>
+      <View>
+        <TouchableOpacity style={styles.activityContainer} onPress={this.navigate.bind(this)}>
+          <View style={{flex:3}}>
+            <Text style={{color:'#4841BB', fontWeight:'bold', fontSize:20}}>{this.props.exercise.title}</Text>
+          </View>
+          <View style={{flex:2}}></View>
+        </TouchableOpacity>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
   activityContainer: {
-    flex: 1,
+    flexDirection:'row',
     backgroundColor: 'white',
-    height: 60,
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
+    height: 100,
     borderWidth: 2,
-    borderRadius: 50,
+    borderRadius: 5,
     borderColor: 'white',
-    margin: 40
+    padding:15,
+    margin: 10,
   },
 });
 

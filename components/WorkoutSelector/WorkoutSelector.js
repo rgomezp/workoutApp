@@ -177,7 +177,11 @@ class WorkoutSelector extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <OptimizedFlatList data={Object.values(this.state.exercises)}
+        <OptimizedFlatList data={Object.values(this.state.exercises).sort(function(a,b){
+            if(a.title>b.title)return 1;
+            else if(b.title>a.title)return -1;
+            else return 0;
+          })}
           renderItem={this.buildList}
         keyExtractor={this._keyExtractor}
         ></OptimizedFlatList>

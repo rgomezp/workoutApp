@@ -5,7 +5,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "remotedev": "remotedev --hostname=localhost --port=8000"
   },
   "jest": {
     "preset": "jest-expo"
@@ -29,12 +30,14 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-logger": "^3.0.6",
+    "remote-redux-devtools": "^0.5.16",
     "why-did-you-update": "^1.0.6"
   },
   "devDependencies": {
     "babel-preset-expo": "^5.0.0",
     "jest-expo": "^34.0.0",
-    "remote-redux-devtools": "^0.5.16"
+    "redux-devtools-cli": "0.0.1-1",
+    "remotedev-server": "^0.3.1"
   },
   "private": true
 }

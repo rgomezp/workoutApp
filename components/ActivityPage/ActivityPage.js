@@ -7,6 +7,7 @@ import Clock from '../Clock';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
+import { storeUrl } from 'expo/build/StoreReview/StoreReview';
 
 /*
  * ACTIVITY PAGE
@@ -24,7 +25,27 @@ class ActivityPage extends React.Component{
       userId:props.navigation.getParam('userId'),
       sliderVal : 0,
       title:this.props.navigation.getParam('title', "Workout"),
-      notes : ""
+      notes : "",
+      isValid: false,
+      unsubListener : this.props.screenProps.store.subscribe(function(){
+        // Redux listener
+        function select(state, prop){
+          return state.holdingArea[prop];
+        }
+        
+        const {store} = this.props.screenProps;
+        let sets = select(store.getState(), 'sets');
+        let reps = select(store.getState(), 'reps');
+        let weight = select(store.getState(), 'weight');
+
+        let setsAreSet = Boolean(sets || sets == "0");  
+        let repsAreSet = Boolean(reps || reps == "0");  
+        let weightIsSet = Boolean(weight || weight == "0");  
+
+        if(setsAreSet && repsAreSet && weightIsSet){
+          this.setState({isValid: true});
+        }
+      }.bind(this))
     }
   }
 
@@ -32,6 +53,10 @@ class ActivityPage extends React.Component{
     let exercise = this.props.exercises[this.state.title];
     let historyArr = this.props.history[this.state.title];     // the exercise's history array
     this.setState({notes: exercise.notes, historyArr});
+  }
+
+  componentWillUnmount() {
+    this.state.unsubListener();
   }
   
   saveData = async(key, text) =>{
@@ -103,9 +128,12 @@ class ActivityPage extends React.Component{
               onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
             />
           </View>
-          <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>
+          {this.state.isValid ? <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>
             <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>SAVE</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> : <TouchableOpacity style={styles.button}>
+            <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>...</Text>
+          </TouchableOpacity>}
+          
         </ScrollView>
         </KeyboardAvoidingView>
       </View>
@@ -146,6 +174,18 @@ const styles = StyleSheet.create({
     padding:3
   },
   button:{
+    flex: 1,
+    height: 50,
+    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#4841BB',
+    margin: 10,
+    borderRadius: 50,
+    elevation:2
+  },
+  opaqueButton:{
+    opacity:0.5,
     flex: 1,
     height: 50,
     padding: 10,

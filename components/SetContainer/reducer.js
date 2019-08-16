@@ -17,7 +17,7 @@ function holdingArea(state = {}, action) {
     case SAVE_DIFFICULTY_TO_HOLDING_AREA: 
       return {...state, difficulty: data.difficulty}
     default:
-      return state;
+      return {...state, sets:undefined, reps:undefined, weight:undefined, difficulty:undefined};
   }
 }
 

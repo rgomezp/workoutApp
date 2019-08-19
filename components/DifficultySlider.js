@@ -22,27 +22,27 @@ class DifficultySlider extends Component {
     this.props.holdingArea({difficulty});
 
     if(value <= .2){
-      this.setState({difficulty: difficulty+": Pshhh. Piece of cake", sliderVal: value})
+      this.setState({difficulty: "😌 Pshhh. Piece of cake", sliderVal: value})
       return;
     }
     if(value > .2 && value < .5){
-      this.setState({difficulty: (Math.floor(value*10))+": If I'm honest, that probably won't help my gains", sliderVal: value});
+      this.setState({difficulty: "😒 Honestly, that won't help my gains", sliderVal: value});
       return;
     }
     if(value > .99){
-      this.setState({difficulty:(Math.floor(value*10))+": I'm injured :(", sliderVal: value});
+      this.setState({difficulty: "😖 I'm injured :(", sliderVal: value});
       return;
     }
     if(value > .8){
-      this.setState({difficulty:(Math.floor(value*10))+": That was too hard. I dont want an injury", sliderVal: value});
+      this.setState({difficulty: "😥 Too hard. I dont want an injury", sliderVal: value});
       return;
     }
     if(value > .70){
-      this.setState({difficulty:(Math.floor(value*10))+": Gains sweet spot!", sliderVal: value});
+      this.setState({difficulty: "🔥🔥🔥 Gains sweet spot!", sliderVal: value});
       return;
     }
     if(value > .50){
-      this.setState({difficulty:(Math.floor(value*10))+": Gains", sliderVal: value});
+      this.setState({difficulty:"💪 Gains", sliderVal: value});
       return;
     }
   }
@@ -50,7 +50,7 @@ class DifficultySlider extends Component {
   render() {
     return (
       <View>
-        <Text style={{fontWeight:'bold'}}>{this.state.difficulty}</Text>
+        <Text style={{fontWeight:'bold', textAlign:'center', color:'#4841BB'}}>{this.state.difficulty}</Text>
         <Slider
           value={this.state.sliderVal}
           onSlidingComplete={(value) =>{

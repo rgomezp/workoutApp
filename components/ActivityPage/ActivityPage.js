@@ -126,7 +126,7 @@ class ActivityPage extends React.Component{
             <DifficultySlider/>
           </View>
           <View style={{alignSelf:'stretch', padding: 10}}>
-            <Text style={{fontWeight: 'bold'}}>Notes:</Text>
+            <Text style={{fontWeight: 'bold', color:'#4841BB'}}>Notes:</Text>
             <TextInput multiline={true} numberOfLines={3}
               onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
             />

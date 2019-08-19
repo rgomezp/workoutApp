@@ -9,6 +9,7 @@ import rootReducer from './rootReducer';
 import devToolsEnhancer from 'remote-redux-devtools';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import {whyDidYouUpdate} from 'why-did-you-update';
+import logger from 'redux-logger';
 
 // console.disableYellowBox = true;
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
@@ -16,7 +17,7 @@ import {whyDidYouUpdate} from 'why-did-you-update';
 const middleware = [devToolsEnhancer]
 
 // create redux store
-const store = createStore(rootReducer, devToolsEnhancer({realtime:true}));
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 const RootStack = createStackNavigator({
   Home:{
@@ -33,7 +34,7 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Navigation />
+        <Navigation screenProps={{store}}/>
       </Provider>
     );
   }

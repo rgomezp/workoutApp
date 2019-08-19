@@ -19,7 +19,7 @@ class SetContainer extends React.Component{
     let exercise = this.props.exercises[this.props.title];
     let {sets, reps, weight, notes} = exercise;
 
-    // initial load: puts into holding area for saving
+    // // initial load: puts into holding area for saving
     this.props.holdingArea({reps});
     this.props.holdingArea({sets});
     this.props.holdingArea({weight});
@@ -30,6 +30,10 @@ class SetContainer extends React.Component{
       weight,
       notes
     })
+  }
+
+  componentWillUnmount(){
+    this.props.holdingArea({});
   }
 
   fetchExerciseFromArray(title, array){

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 class Clock extends React.Component {
   constructor(props){
@@ -31,11 +31,17 @@ class Clock extends React.Component {
     clearInterval(this.state.interval);
   }
 
+  restart(){
+    this.setState({seconds:-1});
+  }
+
   render() {
     return (
-      <View style={styles.clockContainer}>
-        <Text style={styles.clock}>{this.state.time}</Text>
-      </View>
+      <TouchableOpacity onPress={this.restart.bind(this)}>
+        <View style={styles.clockContainer}>
+          <Text style={styles.clock}>{this.state.time}</Text>
+        </View>
+      </TouchableOpacity>
     );
   }
 }

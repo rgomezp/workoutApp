@@ -74,6 +74,9 @@ class WorkoutSelector extends React.Component{
         },
         "Cable Ab Pulldowns":{
           title:"Cable Ab Pulldowns"
+        },
+        "Test":{
+          title:"Test"
         }
       }
     }

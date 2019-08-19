@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage} from 'react-native';
+import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage, Animated} from 'react-native';
 import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';
@@ -22,6 +22,7 @@ class ActivityPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      buttonAnim: new Animated.Value(0.5),
       userId:props.navigation.getParam('userId'),
       sliderVal : 0,
       title:this.props.navigation.getParam('title', "Workout"),
@@ -37,12 +38,14 @@ class ActivityPage extends React.Component{
         let sets = select(store.getState(), 'sets');
         let reps = select(store.getState(), 'reps');
         let weight = select(store.getState(), 'weight');
+        let difficulty = select(store.getState(), 'difficulty');
 
         let setsAreSet = Boolean(sets || sets == "0");  
         let repsAreSet = Boolean(reps || reps == "0");  
         let weightIsSet = Boolean(weight || weight == "0");  
+        let difficultyIsSet = Boolean(difficulty);
 
-        if(setsAreSet && repsAreSet && weightIsSet){
+        if(setsAreSet && repsAreSet && weightIsSet && difficultyIsSet){
           this.setState({isValid: true});
         }
       }.bind(this))
@@ -128,11 +131,12 @@ class ActivityPage extends React.Component{
               onChangeText={(text) => this.setState({notes: text})} value={this.state.notes} placeholder="Tap to write"
             />
           </View>
-          {this.state.isValid ? <TouchableOpacity style={styles.button} onPress={this.finish.bind(this)}>
-            <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>SAVE</Text>
-          </TouchableOpacity> : <TouchableOpacity style={styles.button}>
-            <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>...</Text>
-          </TouchableOpacity>}
+          
+          <TouchableOpacity onPress={this.state.isValid?this.finish.bind(this):()=>{}}>
+            <View style={this.state.isValid?styles.button:styles.opaqueButton}>
+              <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>SAVE</Text>
+            </View>
+          </TouchableOpacity>
           
         </ScrollView>
         </KeyboardAvoidingView>

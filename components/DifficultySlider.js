@@ -10,7 +10,7 @@ class DifficultySlider extends Component {
     super(props);
     this.state = {
       difficulty : "The workout I did was",
-      sliderVal  : props.startingValue,
+      sliderVal  : this.props.startingValue
     }
   }
   

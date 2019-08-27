@@ -111,6 +111,8 @@ class ActivityPage extends React.Component{
   });
 
   render(){
+    const {exercises} = this.props;
+    const exercise = exercises[this.state.title];
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
@@ -118,12 +120,11 @@ class ActivityPage extends React.Component{
           <TrackingPanel title={this.state.title}/>
           {/*--------SETS---------*/}
           <SetContainer
-            title = {this.state.title}
-            exercises = {this.props.exercises}
+            exercise={exercise}
           />
           <Clock/>
           <View style={{padding: 10}}>
-            <DifficultySlider startingValue={this.props.holdingArea.difficulty || 0} />
+            <DifficultySlider startingValue={Number(exercise.difficulty/10) || 0} />
           </View>
           <View style={{alignSelf:'stretch', padding: 10}}>
             <Text style={{fontWeight: 'bold', color:'#4841BB'}}>Notes:</Text>

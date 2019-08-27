@@ -16,7 +16,7 @@ class SetContainer extends React.Component{
   }
   
   componentDidMount(){
-    let exercise = this.props.exercises[this.props.title];
+    let exercise = this.props.exercise;
     let {sets, reps, weight, difficulty} = exercise;
 
     // // initial load: puts into holding area for saving

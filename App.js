@@ -6,15 +6,16 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
-import devToolsEnhancer from 'remote-redux-devtools';
-import { composeWithDevTools } from 'redux-devtools-extension';
+import { composeWithDevTools } from 'remote-redux-devtools';
+//import { composeWithDevTools } from 'redux-devtools-extension';
 import {whyDidYouUpdate} from 'why-did-you-update';
 import logger from 'redux-logger';
 
 // console.disableYellowBox = true;
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
-const middleware = [devToolsEnhancer]
+// const middleware = [devToolsEnhancer]
+//const composeEnhancers = composeWithDevTools({realtime:true, port:8080, hostname: '192.168.0.24'});
 
 // create redux store
 const store = createStore(rootReducer, applyMiddleware(logger));

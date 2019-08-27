@@ -39,8 +39,8 @@ class WorkoutSelector extends React.Component{
         "Hardgainer Shoulder":{
           title:"Hardgainer Shoulder"
         },
-        "Calve Raises":{
-          title: "Calve Raises"
+        "Calve Press":{
+          title: "Calve Press"
         },
         "Dumbell Bench Press":{
           title:"Dumbell Bench Press"
@@ -63,8 +63,8 @@ class WorkoutSelector extends React.Component{
         "Overhead Tricep Extensions":{
           title:"Overhead Tricep Extensions"
         },
-        "Standing Cable Press":{
-          title:"Standing Cable Press"
+        "Chest Flys":{
+          title:"Chest Flys"
         },
         "Incline Bench Press":{
           title:"Incline Bench Press"
@@ -77,31 +77,86 @@ class WorkoutSelector extends React.Component{
         },
         "Test":{
           title:"Test"
-        }
+        },
+        "Test 2":{
+          title:"Test 2"
+        },
+        "Overhead Lat Pulldown":{
+          title:"Overhead Lat Pulldown"
+        },
+        "Battle Ropes":{
+          title:"Battle Ropes"
+        },
+        "Seated Leg Curl":{
+          title:"Seated Leg Curl"
+        },
+        "Other 3":{
+          title:"Other 3"
+        },
+        "Other 1":{
+          title:"Other 1"
+        },
+        "Other 2":{
+          title:"Other 2"
+        },
+        "Dips":{
+          title:"Dips"
+        },
+        "Glute Extensions":{
+          title:"Glute Extensions"
+        },
+        "Test":{
+          title:"Test"
+        },
+        "Glute Curls":{
+          title:"Glute Curls"
+        },
+        "Scott's Back 1":{
+          title:"Scott's Back 1"
+        },
+        "Scott's Back 2":{
+          title:"Scott's Back 2"
+        },
+        "Scott's Back 3":{
+          title:"Scott's Back 3"
+        },
+        "Scott's Triceps 1":{ 
+          title:"Scott's Triceps 1"
+        },
+        "Scott's Triceps 2":{ 
+          title:"Scott's Triceps 2"
+        },
+        "Scott's Biceps 1":{ 
+          title:"Scott's Biceps 1"
+        },
+        "Scott's Biceps 2":{ 
+          title:"Scott's Biceps 2"
+        },
+        "Scott's Biceps 1":{ 
+          title:"Scott's Biceps 1"
+        },
+        "Scott's Biceps 2":{ 
+          title:"Scott's Biceps 2"
+        },
+        "Scott's Shoulder 1":{ 
+          title:"Scott's Shoulder 1"
+        },
+        "Scott's Shoulder 2":{ 
+          title:"Scott's Shoulder 2"
+        },
+        
+      
       }
     }
     this.updateExercises = this.updateExercises.bind(this);
   }
-
-  async getExerciseData(title){
-    let sets = await this._retrieveData(title+":sets");
-    let reps = await this._retrieveData(title+":reps");
-    let weight = await this._retrieveData(title+":weight");
-    let notes = await this._retrieveData(title+":notes");
-    
-    await Promise.all([sets, reps, weight]).then((values) => {
-      return values;
-    }).then((values)=>{
-      sets = values[0];
-      reps = values[1];
-      weight = values[2];
-    });
-    let exercise = {title};
-    exercise.sets = sets;
-    exercise.reps = reps;
-    exercise.weight = weight;
-    exercise.notes = notes;
-    return new Promise(resolve => {resolve(exercise)});
+  
+  saveData = async(key, text) =>{
+    try {
+      await AsyncStorage.setItem(key, text);
+    } catch (error) {
+      console.log("Error saving data:", error);
+    } 
   }
 
   async getExerciseHistory(exercise){
@@ -120,37 +175,31 @@ class WorkoutSelector extends React.Component{
       };
     });
   }
-  
-  saveData = async(key, text) =>{
-    try {
-      await AsyncStorage.setItem(key, text);
-    } catch (error) {
-      console.log("Error saving data:", error);
-    } 
-  }
 
   async updateExercises(){
     let exerciseArr = Object.values(this.state.exercises);
     let exercises = {};
     let allHistory = {};
+
     for(let i=0; i<exerciseArr.length; i++){
-      let title = exerciseArr[i].title;
       let exercise = exerciseArr[i];
-      let exerciseData = await this.getExerciseData(title);
-      exercises[title] = exerciseData;
-     
+      let {title} = exercise;
+      let history = {};
+      
       try {
-        let history = await this.getExerciseHistory(exercise);
+        history = await this.getExerciseHistory(exercise);
         allHistory[exercise.title] = history;
+        exercises[title] = history[history.length-1];
       } catch(error) {
         console.log(error);
       }
+
     }
-    this.setState({exercises, allHistory});
+    //this.setState({exercises, allHistory});
 
     // load into redux
-    this.props.loadDataIntoRedux(this.state.exercises);
-    this.props.loadHistoryIntoRedux(this.state.allHistory);
+    this.props.loadDataIntoRedux(exercises);
+    this.props.loadHistoryIntoRedux(allHistory);
   }
 
   componentDidMount(){

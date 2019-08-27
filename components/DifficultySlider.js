@@ -10,7 +10,7 @@ class DifficultySlider extends Component {
     super(props);
     this.state = {
       difficulty : "The workout I did was",
-      sliderVal  : 0,
+      sliderVal  : props.startingValue,
     }
   }
   
@@ -53,6 +53,7 @@ class DifficultySlider extends Component {
         <Text style={{fontWeight:'bold', textAlign:'center', color:'#4841BB'}}>{this.state.difficulty}</Text>
         <Slider
           value={this.state.sliderVal}
+          lastValue={2}
           onSlidingComplete={(value) =>{
             this.checkDifficulty(value);
           }}

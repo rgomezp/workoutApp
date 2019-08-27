@@ -123,7 +123,7 @@ class ActivityPage extends React.Component{
           />
           <Clock/>
           <View style={{padding: 10}}>
-            <DifficultySlider/>
+            <DifficultySlider startingValue={this.props.holdingArea.difficulty || 0} />
           </View>
           <View style={{alignSelf:'stretch', padding: 10}}>
             <Text style={{fontWeight: 'bold', color:'#4841BB'}}>Notes:</Text>

@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "eject": "expo eject",
     "test": "node ./node_modules/jest/bin/jest.js --watchAll",
-    "remotedev": "remotedev --hostname=localhost --port=8000"
+    "remotedev": "remotedev --hostname=localhost --port=8080"
   },
   "jest": {
     "preset": "jest-expo"

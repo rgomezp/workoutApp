@@ -13,7 +13,7 @@ function holdingArea(data){
   } else if (data.difficulty) { 
     return { type : SAVE_DIFFICULTY_TO_HOLDING_AREA, data : data }
   } else {
-    return { type : 'DEFAULT'}
+    return { type : 'CLEAR_HOLDING_AREA'} // clears holding area (sets everything to undefined)
   }
 }
 

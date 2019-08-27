@@ -17,18 +17,18 @@ class SetContainer extends React.Component{
   
   componentDidMount(){
     let exercise = this.props.exercises[this.props.title];
-    let {sets, reps, weight, notes} = exercise;
+    let {sets, reps, weight, difficulty} = exercise;
 
     // // initial load: puts into holding area for saving
     this.props.holdingArea({reps});
     this.props.holdingArea({sets});
     this.props.holdingArea({weight});
+    this.props.holdingArea({difficulty});
     
     this.setState({
       sets,
       reps,
-      weight,
-      notes
+      weight
     })
   }
 

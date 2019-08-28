@@ -7,32 +7,39 @@ class Clock extends React.Component {
 
     this.state = {
       time:"00:00",
-      seconds:0,
       interval:undefined
     }
   }
 
   componentDidMount(){
-    let interval = setInterval(()=>{
-      let {seconds} = this.state;
-      seconds+=1;
-      let mins = Math.floor(seconds/60);
-      let secs = seconds % 60;
-      let leadingMinuteZero = mins < 10 ? "0" : "";
-      let leadingSecondZero = secs < 10 ? "0" : "";
-      let time = leadingMinuteZero+mins+":"+leadingSecondZero+secs;
-      this.setState({time, seconds});
-    },1000)
-
-    this.setState({interval});
+    this.startInterval();
   }
 
   componentWillUnmount(){
     clearInterval(this.state.interval);
   }
 
+  startInterval(){
+    let initialTime = Math.floor(Date.now()); // milliseconds
+    let interval = setInterval(()=>{
+      let currentTime = Math.floor(Date.now());
+      let seconds = Math.floor((currentTime - initialTime)/1000);
+
+      let mins = Math.floor(seconds/60);
+      let secs = seconds % 60;
+      let leadingMinuteZero = mins < 10 ? "0" : "";
+      let leadingSecondZero = secs < 10 ? "0" : "";
+      let time = leadingMinuteZero+mins+":"+leadingSecondZero+secs;
+      this.setState({time});
+    },1000)
+
+    this.setState({interval});
+  }
+
   restart(){
-    this.setState({seconds:-1});
+    this.setState({time:"00:00"});
+    clearInterval(this.state.interval);
+    this.startInterval();
   }
 
   render() {

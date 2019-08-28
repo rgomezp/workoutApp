@@ -23,6 +23,10 @@ class SetContainer extends React.Component{
     this.props.holdingArea({reps});
     this.props.holdingArea({sets});
     this.props.holdingArea({weight});
+    
+    if (difficulty == undefined) {
+      difficulty = 5;
+    }
     this.props.holdingArea({difficulty});
     
     this.setState({

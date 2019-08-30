@@ -27,9 +27,12 @@ class ActivityPage extends React.Component{
       sliderVal : 0,
       title:this.props.navigation.getParam('title', "Workout"),
       notes : "",
+      difficultyIsSet: false,
+      initialDifficulty: undefined,
       isValid: false,
       unsubListener : this.props.screenProps.store.subscribe(function(){
         // Redux listener
+
         function select(state, prop){
           return state.holdingArea[prop];
         }
@@ -39,13 +42,18 @@ class ActivityPage extends React.Component{
         let reps = select(store.getState(), 'reps');
         let weight = select(store.getState(), 'weight');
         let difficulty = select(store.getState(), 'difficulty');
+        
+        if (difficulty && !this.state.difficultyIsSet) {
+          this.setState({initialDifficulty: difficulty, difficultyIsSet: true});
+        } else if (this.state.difficultyIsSet && difficulty !== this.state.initialDifficulty) {
+          var difficultyChanged = true;
+        }
 
         let setsAreSet = Boolean(sets || sets == "0");  
         let repsAreSet = Boolean(reps || reps == "0");  
         let weightIsSet = Boolean(weight || weight == "0");  
-        let difficultyIsSet = Boolean(difficulty);
 
-        if(setsAreSet && repsAreSet && weightIsSet && difficultyIsSet){
+        if(setsAreSet && repsAreSet && weightIsSet && difficultyChanged){
           this.setState({isValid: true});
         }
       }.bind(this))
@@ -78,9 +86,6 @@ class ActivityPage extends React.Component{
     const notes = this.state.notes;
 
     this.saveData(this.state.title+":notes", notes);
-    this.saveData(this.state.title+":reps", reps);
-    this.saveData(this.state.title+":sets", sets);
-    this.saveData(this.state.title+":weight", weight);
     
     // save to history
     let date = new Date();
@@ -99,7 +104,7 @@ class ActivityPage extends React.Component{
 
     let exercises = this.props.exercises;
     let title = this.state.title;
-    let exercise = {title, notes, reps, sets, weight};
+    let exercise = {title, notes, reps, sets, weight, difficulty};
     exercises[title] = exercise;
 
     this.props.updateDataInRedux(exercises);

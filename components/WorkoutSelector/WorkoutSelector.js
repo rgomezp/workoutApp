@@ -159,6 +159,11 @@ class WorkoutSelector extends React.Component{
     } 
   }
 
+  async getNotes(title){
+    let notes = await this._retrieveData(title+":notes");
+    return new Promise(resolve => {resolve(notes)});
+  }
+
   async getExerciseHistory(exercise){
     let {title} = exercise;
     let history = await this._retrieveData(title+":history");
@@ -190,6 +195,7 @@ class WorkoutSelector extends React.Component{
         history = await this.getExerciseHistory(exercise);
         allHistory[exercise.title] = history;
         exercises[title] = history[history.length-1];
+        exercises[title].notes = await this.getNotes(title);
       } catch(error) {
         console.log(error);
       }

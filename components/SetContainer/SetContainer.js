@@ -37,6 +37,7 @@ class SetContainer extends React.Component{
   }
 
   componentWillUnmount(){
+    // clears holding area
     this.props.holdingArea({});
   }
 

@@ -18,7 +18,7 @@ class DifficultySlider extends Component {
    * used to check the slider value and update the difficulty description
    */
   checkDifficulty = (value) => {
-    let difficulty = Math.floor(value*10)+"";
+    let difficulty = (value*10+"").substr(0,4);
     this.props.holdingArea({difficulty});
 
     if(value <= .2){
@@ -53,7 +53,6 @@ class DifficultySlider extends Component {
         <Text style={{fontWeight:'bold', textAlign:'center', color:'#4841BB'}}>{this.state.difficulty}</Text>
         <Slider
           value={this.state.sliderVal}
-          lastValue={2}
           onSlidingComplete={(value) =>{
             this.checkDifficulty(value);
           }}

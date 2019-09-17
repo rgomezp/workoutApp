@@ -30,33 +30,34 @@ class ActivityPage extends React.Component{
       difficultyIsSet: false,
       initialDifficulty: undefined,
       isValid: false,
-      unsubListener : this.props.screenProps.store.subscribe(function(){
-        // Redux listener
+      unsubListener : this.props.screenProps.store.subscribe(this.reduxListener)
+    }
+  }
 
-        function select(state, prop){
-          return state.holdingArea[prop];
-        }
-        
-        const {store} = this.props.screenProps;
-        let sets = select(store.getState(), 'sets');
-        let reps = select(store.getState(), 'reps');
-        let weight = select(store.getState(), 'weight');
-        let difficulty = select(store.getState(), 'difficulty');
-        
-        if (difficulty && !this.state.difficultyIsSet) {
-          this.setState({initialDifficulty: difficulty, difficultyIsSet: true});
-        } else if (this.state.difficultyIsSet && difficulty !== this.state.initialDifficulty) {
-          var difficultyChanged = true;
-        }
+  reduxListener = () => {
+    // Redux listener used to detect whether submission is valid
+    function select(state, prop){
+      return state.holdingArea[prop];
+    }
+    
+    const {store} = this.props.screenProps;
+    let sets = select(store.getState(), 'sets');
+    let reps = select(store.getState(), 'reps');
+    let weight = select(store.getState(), 'weight');
+    let difficulty = select(store.getState(), 'difficulty');
+    
+    if (difficulty && !this.state.difficultyIsSet) {
+      this.setState({initialDifficulty: difficulty, difficultyIsSet: true});
+    } else if (this.state.difficultyIsSet && difficulty !== this.state.initialDifficulty) {
+      var difficultyChanged = true;
+    }
 
-        let setsAreSet = Boolean(sets || sets == "0");  
-        let repsAreSet = Boolean(reps || reps == "0");  
-        let weightIsSet = Boolean(weight || weight == "0");  
+    let setsAreSet = Boolean(sets || sets == "0");  
+    let repsAreSet = Boolean(reps || reps == "0");  
+    let weightIsSet = Boolean(weight || weight == "0");  
 
-        if(setsAreSet && repsAreSet && weightIsSet && difficultyChanged){
-          this.setState({isValid: true});
-        }
-      }.bind(this))
+    if(setsAreSet && repsAreSet && weightIsSet && difficultyChanged){
+      this.setState({isValid: true});
     }
   }
 

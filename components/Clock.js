@@ -53,7 +53,7 @@ class Clock extends React.Component {
           <View style={styles.leftBox}><Text style={{color: '#4841BB'}}>{this.state.status}</Text></View>
           <View style={styles.clock}><Text style={styles.clockText}>{this.state.time}</Text></View>
           <View style={styles.rightBox}>
-            <Text style={{color: '#4841BB'}}>SETS</Text>
+            <Text style={{color: '#4841BB'}}>DONE</Text>
             <Text style={{color: '#4841BB'}}>{this.state.completedSets}</Text>
           </View>
         </View>

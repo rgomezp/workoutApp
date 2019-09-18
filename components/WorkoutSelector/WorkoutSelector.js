@@ -6,6 +6,7 @@ import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';
+import FilterBar from '../FilterBar/FilterBar';
 
 /*
  * ACTIVITY SELECTOR (HOME PAGE)
@@ -235,6 +236,7 @@ class WorkoutSelector extends React.Component{
   render(){
     return(
       <View style={styles.container}>
+        <FilterBar/>
         <OptimizedFlatList data={Object.values(this.state.exercises).sort(function(a,b){
             if(a.title>b.title)return 1;
             else if(b.title>a.title)return -1;
@@ -251,8 +253,7 @@ class WorkoutSelector extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#4841BB',
-    padding:10,
+    backgroundColor: '#f3f3f3',
   },
   login:{
     alignItems: 'center'

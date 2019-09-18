@@ -35,10 +35,15 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     padding:15,
     margin: 10,
+    shadowColor: '#000',
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    shadowOffset: {width: 0, height: 2},
+    elevation: 2
   },
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 });
 
 export default connect(mapStateToProps)(Activity);

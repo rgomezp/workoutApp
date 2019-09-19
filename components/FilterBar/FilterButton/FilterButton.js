@@ -1,6 +1,8 @@
-
 import React, { Component } from 'react';
 import {StyleSheet, Text, View, TouchableOpacity} from 'react-native';
+import { connect } from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {filterButtonPressed} from './actions';
 
 class FilterButton extends Component {
   constructor(props){
@@ -11,7 +13,9 @@ class FilterButton extends Component {
   }
 
   buttonPressed(){
-    this.setState({filterOn: !this.state.filterOn})
+    const nextState = !this.state.filterOn;
+    this.setState({filterOn: nextState})
+    this.props.filterButtonPressed({[this.props.text] : nextState});
   }
 
   render() {
@@ -56,4 +60,8 @@ const styles = StyleSheet.create({
   }
 })
 
-export default FilterButton;
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  filterButtonPressed
+}, dispatch);
+
+export default connect(null, mapDispatchToProps)(FilterButton);

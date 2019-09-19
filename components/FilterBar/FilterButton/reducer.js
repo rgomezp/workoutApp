@@ -1,4 +1,4 @@
-import {BUTTON_PRESSED} from './actions';
+import {FILTER_BUTTON_PRESSED} from './actions';
 
 function workoutFilters(state = {}, action) {
   const { type, data } = action;
@@ -8,7 +8,7 @@ function workoutFilters(state = {}, action) {
   }
 
   switch (type) {
-    case BUTTON_PRESSED:
+    case FILTER_BUTTON_PRESSED:
       if (key == "Upper") {
         return {...state, upper: data.Upper}
       } else if (key == "Legs") {

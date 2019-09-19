@@ -1,8 +1,7 @@
-
-const BUTTON_PRESSED = 'BUTTON_PRESSED';
+const FILTER_BUTTON_PRESSED = 'FILTER_BUTTON_PRESSED';
 
 function filterButtonPressed(data){
-  return { type : BUTTON_PRESSED, data : data }
+  return { type : FILTER_BUTTON_PRESSED, data : data }
 }
 
-export {filterButtonPressed, BUTTON_PRESSED}
+export {filterButtonPressed, FILTER_BUTTON_PRESSED}

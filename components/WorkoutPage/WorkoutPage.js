@@ -11,13 +11,13 @@ import {updateDataInRedux, updateHistoryInRedux} from './actions';
 /*
  * WORKOUT PAGE
  * individual exercise screen
- * each workout page gets its props from navigation which comes from the Workout component in Workout.js
+ * each activity page gets its props from navigation which comes from the Activity component in Activity.js
 */
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-class WorkoutPage extends React.Component{
+class ActivityPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -162,13 +162,21 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateHistoryInRedux
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(WorkoutPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
     padding:0,
+  },
+  activityContainer: {
+    backgroundColor: 'white',
+    height: 60,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 3,
+    borderBottomColor: '#4841BB'
   },
   historyButton:{
     backgroundColor: '#FFC4C4',

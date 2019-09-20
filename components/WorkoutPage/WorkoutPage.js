@@ -7,18 +7,17 @@ import Clock from '../Clock';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
-import { storeUrl } from 'expo/build/StoreReview/StoreReview';
 
 /*
- * ACTIVITY PAGE
+ * WORKOUT PAGE
  * individual exercise screen
- * each activity page gets its props from navigation which comes from the Activity component in Activity.js
+ * each workout page gets its props from navigation which comes from the Workout component in Workout.js
 */
 
 var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
-class ActivityPage extends React.Component{
+class WorkoutPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
@@ -163,21 +162,13 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateHistoryInRedux
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(ActivityPage);
+export default connect(mapStateToProps, mapDispatchToProps)(WorkoutPage);
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
     padding:0,
-  },
-  activityContainer: {
-    backgroundColor: 'white',
-    height: 60,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 3,
-    borderBottomColor: '#4841BB'
   },
   historyButton:{
     backgroundColor: '#FFC4C4',

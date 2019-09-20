@@ -1,6 +1,6 @@
 import React from 'react';
 import {TouchableOpacity, FlatList, StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
-import Activity from '../Activity';
+import Workout from '../Workout/Workout';
 import {AsyncStorage} from 'react-native';
 import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 import { connect } from 'react-redux';
@@ -9,11 +9,11 @@ import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';
 import FilterBar from '../FilterBar/FilterBar';
 
 /*
- * ACTIVITY SELECTOR (HOME PAGE)
+ * WORKOUT SELECTOR (HOME PAGE)
  * includes login page
  * handles axios fetch of exercises
  * displays exercises
- * passes state into the Activity component found on Activity.js (including userId)
+ * passes state into the Workout component found on Workout.js (including userId)
 */
 
 class WorkoutSelector extends React.Component{
@@ -228,7 +228,7 @@ class WorkoutSelector extends React.Component{
   // https://facebook.github.io/react-native/docs/flatlist.html#getitemlayout to optimize the FlatList
 
   buildList = (iter) => {
-    return (<Activity navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises}/>)
+    return (<Workout navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises}/>)
   }
 
   _keyExtractor = (item, index) => item.title;

@@ -2,19 +2,19 @@ import React from 'react';
 import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
-class Activity extends React.Component{
+class Workout extends React.Component{
   constructor(props){
     super(props);
   }
 
   navigate(){
-    this.props.navigation.navigate('Activity', {title: this.props.exercise.title});
+    this.props.navigation.navigate('Workout', {title: this.props.exercise.title});
   }
 
   render(){
     return(
       <View>
-        <TouchableOpacity style={styles.activityContainer} onPress={this.navigate.bind(this)}>
+        <TouchableOpacity style={styles.workoutContainer} onPress={this.navigate.bind(this)}>
           <View style={{flex:3}}>
             <Text style={{color:'#4841BB', fontWeight:'bold', fontSize:20}}>{this.props.exercise.title}</Text>
           </View>
@@ -26,7 +26,7 @@ class Activity extends React.Component{
 }
 
 const styles = StyleSheet.create({
-  activityContainer: {
+  workoutContainer: {
     flexDirection:'row',
     backgroundColor: 'white',
     height: 100,
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
 const mapStateToProps = () => ({
 });
 
-export default connect(mapStateToProps)(Activity);
+export default connect(mapStateToProps)(Workout);

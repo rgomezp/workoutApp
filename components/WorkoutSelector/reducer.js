@@ -1,5 +1,5 @@
 import {LOAD_DATA_INTO_REDUX, LOAD_HISTORY_INTO_REDUX} from './actions';
-import { UPDATE_HISTORY_IN_REDUX } from '../ActivityPage/actions';
+import { UPDATE_HISTORY_IN_REDUX } from '../WorkoutPage/actions';
 
 const initialState = {};
 

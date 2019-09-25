@@ -3,18 +3,18 @@ import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 class Workout extends React.Component{
-  constructor(props){
-    super(props);
+  navigate = () => {
+    this.props.navigation.navigate('Workout', {title: this.props.exercise.title});
   }
 
-  navigate(){
-    this.props.navigation.navigate('Workout', {title: this.props.exercise.title});
+  shouldComponentUpdate() {
+    return false
   }
 
   render(){
     return(
       <View>
-        <TouchableOpacity style={styles.workoutContainer} onPress={this.navigate.bind(this)}>
+        <TouchableOpacity style={styles.workoutContainer} onPress={this.navigate}>
           <View style={{flex:3}}>
             <Text style={{color:'#4841BB', fontWeight:'bold', fontSize:20}}>{this.props.exercise.title}</Text>
           </View>

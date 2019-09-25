@@ -12,7 +12,7 @@ class FilterButton extends Component {
     }
   }
 
-  buttonPressed(){
+  buttonPressed = () => {
     const nextState = !this.state.filterOn;
     this.setState({filterOn: nextState})
     this.props.filterButtonPressed({[this.props.text] : nextState});
@@ -21,13 +21,13 @@ class FilterButton extends Component {
   render() {
     if(this.state.filterOn){
       return (
-        <TouchableOpacity style={styles.buttonOn} onPress={this.buttonPressed.bind(this)}>
+        <TouchableOpacity style={styles.buttonOn} onPress={this.buttonPressed}>
           <Text style={{color: '#4841BB'}}>{this.props.text}</Text>
         </TouchableOpacity>
       );
     } else {
       return (
-        <TouchableOpacity style={styles.button} onPress={this.buttonPressed.bind(this)}>
+        <TouchableOpacity style={styles.button} onPress={this.buttonPressed}>
           <Text style={{color: 'white'}}>{this.props.text}</Text>
         </TouchableOpacity>
       );

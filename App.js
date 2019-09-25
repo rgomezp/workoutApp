@@ -14,11 +14,8 @@ import logger from 'redux-logger';
 // console.disableYellowBox = true;
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
-// const middleware = [devToolsEnhancer]
-//const composeEnhancers = composeWithDevTools({realtime:true, port:8080, hostname: '192.168.0.24'});
-
 // create redux store
-const store = createStore(rootReducer, applyMiddleware(logger));
+const store = createStore(rootReducer, applyMiddleware());
 
 const RootStack = createStackNavigator({
   Home:{

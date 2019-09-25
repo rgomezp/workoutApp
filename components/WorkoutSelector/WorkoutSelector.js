@@ -2,7 +2,6 @@ import React from 'react';
 import {TouchableOpacity, FlatList, StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
 import Workout from '../Workout/Workout';
 import {AsyncStorage} from 'react-native';
-import {OptimizedFlatList} from 'react-native-optimized-flatlist';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';
@@ -30,175 +29,215 @@ class WorkoutSelector extends React.Component{
       exercises:{
         "Benchpress":{
           title:"Benchpress",
-          group:"Upper"
+          group:"Upper",
+          key:'0'
         },
         "9,8 Curls":{
           title:"9,8 Curls",
-          group:"Upper"
+          group:"Upper",
+          key:'1'
         },
         "Barbell Curls":{
           title:"Barbell Curls",
-          group:"Upper"
+          group:"Upper",
+          key:'2'
         },
         "Seated Shoulder Press":{
           title:"Seated Shoulder Press",
-          group:"Upper"
+          group:"Upper",
+          key:'3'
         },
         "Hardgainer Shoulder":{
           title:"Hardgainer Shoulder",
-          group:"Upper"
+          group:"Upper",
+          key:'4'
         },
         "Calve Press":{
           title: "Calve Press",
-          group:"Legs"
+          group:"Legs",
+          key:'5'
         },
         "Dumbell Bench Press":{
           title:"Dumbell Bench Press",
-          group:"Upper"
+          group:"Upper",
+          key:'6'
         },
         "Back Squats":{
           title:"Back Squats",
-          group:"Legs"
+          group:"Legs",
+          key:'7'
         },
         "Front Squats":{
           title:"Front Squats",
-          group:"Legs"
+          group:"Legs",
+          key:'8'
         },
         "Standing Squat Machine":{
           title:"Standing Squat Machine",
-          group:"Legs"
+          group:"Legs",
+          key:'9'
         },
         "Sumo Dead Lifts":{
           title:"Sumo Dead Lifts",
-          group:"Legs"
+          group:"Legs",
+          key:'10'
         },
         "Tricep Pulldowns":{
           title:"Tricep Pulldowns",
-          group:"Upper"
+          group:"Upper",
+          key:'11'
         },
         "Overhead Tricep Extensions":{
           title:"Overhead Tricep Extensions",
-          group:"Upper"
+          group:"Upper",
+          key:'12'
         },
         "Chest Flys":{
           title:"Chest Flys",
-          group:"Upper"
+          group:"Upper",
+          key:'13'
         },
         "Incline Bench Press":{
           title:"Incline Bench Press",
-          group:"Upper"
+          group:"Upper",
+          key:'14'
         },
         "Drag Curls":{
           title:"Drag Curls",
-          group:"Upper"
+          group:"Upper",
+          key:'15'
         },
         "Cable Ab Pulldowns":{
           title:"Cable Ab Pulldowns",
-          group:"Upper"
+          group:"Upper",
+          key:'16'
         },
         "Test":{
           title:"Test",
-          group:"Upper"
+          group:"Upper",
+          key:'17'
         },
         "Test 2":{
           title:"Test 2",
-          group:"Legs"
+          group:"Legs",
+          key:'18'
         },
         "Overhead Lat Pulldown":{
           title:"Overhead Lat Pulldown",
-          group:"Upper"
+          group:"Upper",
+          key:'19'
         },
         "Battle Ropes":{
           title:"Battle Ropes",
-          group:"Upper"
+          group:"Upper",
+          key:'20'
         },
         "Seated Leg Curl":{
           title:"Seated Leg Curl",
-          group:"Legs"
+          group:"Legs",
+          key:'21'
         },
         "Other 3":{
           title:"Other 3",
-          group:"Upper"
+          group:"Upper",
+          key:'22'
         },
         "Other 1":{
           title:"Other 1",
-          group:"Upper"
+          group:"Upper",
+          key:'23'
         },
         "Other 2":{
           title:"Other 2",
-          group:"Upper"
+          group:"Upper",
+          key:'24'
         },
         "Dips":{
           title:"Dips",
-          group:"Upper"
+          group:"Upper",
+          key:'25'
         },
         "Glute Extensions":{
           title:"Glute Extensions",
-          group:"Legs"
+          group:"Legs",
+          key:'26'
         },
         "Test":{
           title:"Test",
-          group:"Upper"
+          group:"Upper",
+          key:'27'
         },
         "Glute Curls":{
           title:"Glute Curls",
-          group:"Legs"
+          group:"Legs",
+          key:'28'
         },
         "Scott's Back 1":{
           title:"Scott's Back 1",
-          group:"Upper"
+          group:"Upper",
+          key:'29'
         },
         "Scott's Back 2":{
           title:"Scott's Back 2",
-          group:"Upper"
+          group:"Upper",
+          key:'30'
           
         },
         "Scott's Back 3":{
           title:"Scott's Back 3",
-          group:"Upper"
+          group:"Upper",
+          key:'31'
           
         },
         "Scott's Triceps 1":{ 
           title:"Scott's Triceps 1",
-          group:"Upper"
+          group:"Upper",
+          key:'32'
           
         },
         "Scott's Triceps 2":{ 
           title:"Scott's Triceps 2",
-          group:"Upper"
+          group:"Upper",
+          key:'33'
           
         },
         "Scott's Biceps 1":{ 
           title:"Scott's Biceps 1",
-          group:"Upper"
+          group:"Upper",
+          key:'34'
           
         },
         "Scott's Biceps 2":{ 
           title:"Scott's Biceps 2",
-          group:"Upper"
+          group:"Upper",
+          key:'35'
           
         },
         "Scott's Biceps 1":{ 
           title:"Scott's Biceps 1",
-          group:"Upper"
+          group:"Upper",
+          key:'36'
           
         },
         "Scott's Biceps 2":{ 
           title:"Scott's Biceps 2",
-          group:"Upper"
+          group:"Upper",
+          key:'37'
           
         },
         "Scott's Shoulder 1":{ 
           title:"Scott's Shoulder 1",
-          group:"Upper"
+          group:"Upper",
+          key:'38'
           
         },
         "Scott's Shoulder 2":{ 
           title:"Scott's Shoulder 2",
-          group:"Upper"
-          
+          group:"Upper",
+          key:'39'
         }
-      }
+      },
+      filteredExercises: {}
     }
     this.updateExercises = this.updateExercises.bind(this);
   }
@@ -216,16 +255,33 @@ class WorkoutSelector extends React.Component{
     const core = select(state, 'core');
     const cardio = select(state, 'cardio');
     const activeFilters = {upper, legs, core, cardio};
-
-    this.setState({activeFilters});
+    const filteredExercises = this.sortExercises(this.filterExercises(activeFilters));
+    this.setState({filteredExercises});
   }
 
   componentDidMount(){
     this.updateExercises();
   }
 
+  shouldComponentUpdate(nextProps, nextState){
+    const shouldUpdate = JSON.stringify(this.state.filteredExercises) !== JSON.stringify(nextState.filteredExercises);
+
+    if ( !shouldUpdate ) {
+      return false;
+    }
+    else return true;
+  }
+
   componentWillUnmount(){
     this.state.unsubListener();
+  }
+
+  sortExercises (exercises) {
+    return Object.values(exercises).sort(function(a,b){
+      if(a.title>b.title)return 1;
+      else if(b.title>a.title)return -1;
+      else return 0;
+    })
   }
   
   saveData = async(key, text) =>{
@@ -258,7 +314,22 @@ class WorkoutSelector extends React.Component{
     });
   }
 
-  async updateExercises(){
+  filterExercises(filters) {
+    const filteredExercises = {};
+
+    Object.keys(this.state.exercises).forEach((title) => {
+      const exercise = this.state.exercises[title];
+      const group = exercise.group.toLowerCase();
+
+      if (filters[group]) {
+        filteredExercises[title] = exercise;
+      }
+    });
+
+    return filteredExercises;
+  }
+
+  async updateExercises() {
     let exerciseArr = Object.values(this.state.exercises);
     let exercises = {};
     let allHistory = {};
@@ -301,20 +372,16 @@ class WorkoutSelector extends React.Component{
     return (<Workout navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises}/>)
   }
 
-  _keyExtractor = (item, index) => item.title;
+  _keyExtractor = (item, index) => item.key;
 
   render(){
     return(
       <View style={styles.container}>
         <FilterBar/>
-        <OptimizedFlatList data={Object.values(this.state.exercises).sort(function(a,b){
-            if(a.title>b.title)return 1;
-            else if(b.title>a.title)return -1;
-            else return 0;
-          })}
+        <FlatList removeClippedSubviews={false} data={Object.values(this.state.filteredExercises)}
           renderItem={this.buildList}
         keyExtractor={this._keyExtractor}
-        ></OptimizedFlatList>
+        ></FlatList>
       </View>
     )
   }
@@ -334,7 +401,7 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({
 })
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

@@ -72,7 +72,9 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderRadius: 5,
     borderColor: '#4841BB',
-    margin: 10,
+    marginBottom: 10,
+    marginHorizontal: 10,
+    marginTop: 20
   },
   clock:{
     justifyContent:'center',

@@ -174,8 +174,6 @@ export default connect(null, mapDispatchToProps)(SetContainer);
 
 const styles = StyleSheet.create({
   setContainer:{
-    borderTopWidth: 3,
-    borderColor: '#4841BB',
     flexDirection: 'row',
     padding: 0
   },

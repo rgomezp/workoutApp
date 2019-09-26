@@ -50,7 +50,7 @@ const Panel = (props) => {
     }}
     width={Dimensions.get('window').width} // from react-native
     height={170}
-    yAxisLabel={'lbs '}
+    yAxisLabel={'wgt '}
     chartConfig={{
       backgroundColor: 'white',
       backgroundGradientFrom: '#4841BB',

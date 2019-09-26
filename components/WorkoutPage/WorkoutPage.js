@@ -7,6 +7,7 @@ import Clock from '../Clock';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
+import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 /*
  * WORKOUT PAGE
@@ -21,10 +22,9 @@ class ActivityPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      buttonAnim: new Animated.Value(0.5),
       userId:props.navigation.getParam('userId'),
-      sliderVal : 0,
       title:this.props.navigation.getParam('title', "Workout"),
+      sliderVal : 0,
       notes : "",
       difficultyIsSet: false,
       initialDifficulty: undefined,
@@ -64,10 +64,12 @@ class ActivityPage extends React.Component{
     let exercise = this.props.exercises[this.state.title];
     let historyArr = this.props.history[this.state.title];     // the exercise's history array
     this.setState({notes: exercise.notes, historyArr});
+    activateKeepAwake();
   }
 
   componentWillUnmount() {
     this.state.unsubListener();
+    deactivateKeepAwake();
   }
   
   saveData = async(key, text) =>{
@@ -123,11 +125,11 @@ class ActivityPage extends React.Component{
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>
           <TrackingPanel title={this.state.title}/>
+          <Clock/>
           {/*--------SETS---------*/}
           <SetContainer
             exercise={exercise}
           />
-          <Clock/>
           <View style={{padding: 10}}>
             <DifficultySlider startingValue={Number(exercise.difficulty/10) || 0} />
           </View>

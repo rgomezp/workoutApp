@@ -52,7 +52,9 @@ const styles = StyleSheet.create({
   historyButton:{
     backgroundColor: '#8E89DE',
     alignItems: 'center',
-    padding:3
+    padding:3,
+    borderBottomWidth: 3,
+    borderColor: '#4841BB',
   },
   overlay:{
     flex: 1,

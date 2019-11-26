@@ -49,6 +49,27 @@ class SetContainer extends React.Component{
     }
   }
 
+  validateWeight(text) {
+    var result;
+    const splitArr = text.split('.');
+
+    if(splitArr.length === 2 && splitArr[1] == 5){
+      // valid e.g: ["12", "5"]
+      if(splitArr[0].length < 3) {
+        result = splitArr[0]+"½";
+      } else if(splitArr[0].length === 3) {
+        result = splitArr[0];
+      } else {
+        result = "!";   // invalid
+      }
+    } else if(splitArr.length === 1 && splitArr[0].length <= 3) { 
+      result = splitArr[0];
+    } else { 
+        result = "!";   // invalid
+    }
+    return result;
+  }
+
   render(){
     return(
       <View>
@@ -120,10 +141,9 @@ class SetContainer extends React.Component{
          placeholder="How much weight?"
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
-           if(text.length<=3){
-             this.setState({ tempWeight : text });
-           }
-         }}
+          this.setState({ tempWeight: this.validateWeight(text) }); 
+         }
+        }
          onCancel={() => {
            this.setState({
              visiblePromptWeight: false,
@@ -131,8 +151,10 @@ class SetContainer extends React.Component{
          }}
          onSubmit={() => {
            let weight = this.state.tempWeight;
-           this.props.holdingArea({weight});
-           this.setState({weight});
+           if(weight !== "!") {
+             this.props.holdingArea({weight});
+             this.setState({weight});
+           }
            this.setState({
              visiblePromptWeight: false,
            });

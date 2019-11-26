@@ -33,7 +33,7 @@ const Panel = (props) => {
         labels.push("");
       }
       isEven = !isEven;
-      weights.push(weight);
+      weights.push(Math.floor(weight));
     }else{
       labels.push('-/-');
       weights.push(0);

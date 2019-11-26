@@ -28,6 +28,8 @@ class SetContainer extends React.Component{
       difficulty = 5;
     }
     this.props.holdingArea({difficulty});
+   
+    weight = this.validateWeight(weight);
     
     this.setState({
       sets,
@@ -41,16 +43,8 @@ class SetContainer extends React.Component{
     this.props.holdingArea({});
   }
 
-  fetchExerciseFromArray(title, array){
-    for(let i=0; i<array.length; i++){
-      if(array[i]['title'] == title){
-        return array[i];
-      }
-    }
-  }
-
   validateWeight(text) {
-    var result;
+    var result = "";
     const splitArr = text.split('.');
 
     if(splitArr.length === 2 && splitArr[1] == 5){
@@ -141,7 +135,7 @@ class SetContainer extends React.Component{
          placeholder="How much weight?"
          isVisible={this.state.visiblePromptWeight}
          onChangeText={(text) => {
-          this.setState({ tempWeight: this.validateWeight(text) }); 
+          this.setState({ tempWeight: text }); 
          }
         }
          onCancel={() => {
@@ -151,9 +145,10 @@ class SetContainer extends React.Component{
          }}
          onSubmit={() => {
            let weight = this.state.tempWeight;
-           if(weight !== "!") {
+           let result = this.validateWeight(weight);
+           if(result !== "!") {
              this.props.holdingArea({weight});
-             this.setState({weight});
+             this.setState({weight : result});
            }
            this.setState({
              visiblePromptWeight: false,

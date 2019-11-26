@@ -137,20 +137,20 @@ class WorkoutSelector extends React.Component{
           group:"Legs",
           key:'21'
         },
-        "Other 3":{
-          title:"Other 3",
+        "Other 4":{
+          title:"Other 4",
           group:"Upper",
-          key:'22'
+          key:'256'
         },
-        "Other 1":{
-          title:"Other 1",
+        "Other 5":{
+          title:"Other 5",
           group:"Upper",
-          key:'23'
+          key:'257'
         },
-        "Other 2":{
-          title:"Other 2",
+        "Other 6":{
+          title:"Other 6",
           group:"Upper",
-          key:'24'
+          key:'258'
         },
         "Dips":{
           title:"Dips",

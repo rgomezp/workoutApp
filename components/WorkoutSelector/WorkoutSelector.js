@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';
 import FilterBar from '../FilterBar/FilterBar';
+import { FloatingAction } from "react-native-floating-action";
 
 /*
  * WORKOUT SELECTOR (HOME PAGE)
@@ -162,11 +163,6 @@ class WorkoutSelector extends React.Component{
           group:"Legs",
           key:'26'
         },
-        "Test":{
-          title:"Test",
-          group:"Upper",
-          key:'27'
-        },
         "Glute Curls":{
           title:"Glute Curls",
           group:"Legs",
@@ -237,13 +233,14 @@ class WorkoutSelector extends React.Component{
           key:'39'
         }
       },
-      filteredExercises: {}
+      filteredExercises: {},
+      workoutAction: "",
+      refreshList: false
     }
     this.updateExercises = this.updateExercises.bind(this);
   }
 
   reduxListener = () => {
-    // Redux listener used to detect whether submission is valid
     function select(state, prop){
       return state.workoutFilters[prop];
     }
@@ -261,13 +258,14 @@ class WorkoutSelector extends React.Component{
 
   componentDidMount(){
     this.updateExercises();
+    console.log("mounted");
   }
 
   shouldComponentUpdate(nextProps, nextState){
-    const shouldUpdate = JSON.stringify(this.state.filteredExercises) !== JSON.stringify(nextState.filteredExercises);
+    const shouldUpdate = JSON.stringify(this.state.filteredExercises) !== JSON.stringify(nextState.filteredExercises) ;
 
     if ( !shouldUpdate ) {
-      return false;
+      return true;
     }
     else return true;
   }
@@ -293,13 +291,13 @@ class WorkoutSelector extends React.Component{
   }
 
   async getNotes(title){
-    let notes = await this._retrieveData(title+":notes");
+    let notes = await this.retrieveData(title+":notes");
     return new Promise(resolve => {resolve(notes)});
   }
 
   async getExerciseHistory(exercise){
     let {title} = exercise;
-    let history = await this._retrieveData(title+":history");
+    let history = await this.retrieveData(title+":history");
     let parsedHistory = JSON.parse(history);
 
     return new Promise((resolve,reject) => {
@@ -354,7 +352,7 @@ class WorkoutSelector extends React.Component{
     this.props.loadHistoryIntoRedux(allHistory);
   }
 
-  _retrieveData = async (key) => {
+  retrieveData = async (key) => {
     var collect;
     try {
       await AsyncStorage.getItem(key).then((values) => {
@@ -368,11 +366,26 @@ class WorkoutSelector extends React.Component{
 
   // https://facebook.github.io/react-native/docs/flatlist.html#getitemlayout to optimize the FlatList
 
+  keyExtractor = (item, index) => item.key;
+
   buildList = (iter) => {
-    return (<Workout navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises}/>)
+    console.log("mounted:", this.state);
+    return (<Workout navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises} workoutAction={this.state.workoutAction}/>)
   }
 
-  _keyExtractor = (item, index) => item.key;
+  floatingActionPress = (name) => {
+    switch (name) {
+      case 'bt_add':
+        // add new workout
+        return;
+      case 'bt_remove':
+        this.setState({workoutAction:"remove", refreshList: !this.state.refreshList});
+        return;
+      case 'bt_edit':
+        this.setState({workoutAction:"edit", refreshList: !this.state.refreshList});
+        return;
+    }
+  }
 
   render(){
     return(
@@ -380,12 +393,43 @@ class WorkoutSelector extends React.Component{
         <FilterBar/>
         <FlatList removeClippedSubviews={false} data={Object.values(this.state.filteredExercises)}
           renderItem={this.buildList}
-        keyExtractor={this._keyExtractor}
+          keyExtractor={this.keyExtractor}
+          extraData={this.state.workoutAction}
         ></FlatList>
+        <FloatingAction
+          actions={actions}
+          color={'#4841BB'}
+          onPressItem={this.floatingActionPress}
+        />
       </View>
     )
   }
 }
+
+// action button
+const actions = [
+  {
+    text: "Add workout",
+    name: "bt_add",
+    position: 1,
+    color: '#4841BB',
+    icon: require("./images/plus.png")
+  },
+  {
+    text: "Remove workout",
+    name: "bt_remove",
+    position: 2,
+    color: '#4841BB',
+    icon: require("./images/minus.png")
+  },
+  {
+    text: "Edit workout",
+    name: "bt_edit",
+    position: 3,
+    color: '#4841BB',
+    icon: require("./images/edit.png")
+  }
+];
 
 const styles = StyleSheet.create({
   container: {

@@ -3,12 +3,25 @@ import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
 
 class Workout extends React.Component{
-  navigate = () => {
-    this.props.navigation.navigate('Workout', {title: this.props.exercise.title});
+  constructor(props) {
+    super(props);
+    this.state = {
+      workoutAction: this.props.workoutAction
+    }
   }
 
-  shouldComponentUpdate() {
-    return false
+  shouldComponentUpdate(){
+    const {workoutAction} = this.props;
+    if (workoutAction !== this.state.workoutAction) {
+      this.setState({workoutAction})
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  navigate = () => {
+    this.props.navigation.navigate('Workout', {title: this.props.exercise.title});
   }
 
   render(){
@@ -17,6 +30,7 @@ class Workout extends React.Component{
         <TouchableOpacity style={styles.workoutContainer} onPress={this.navigate}>
           <View style={{flex:3}}>
             <Text style={{color:'#4841BB', fontWeight:'bold', fontSize:20}}>{this.props.exercise.title}</Text>
+            <Text style={{color:'#4841BB', fontWeight:'bold', fontSize:20}}>{this.props.workoutAction}</Text>
           </View>
           <View style={{flex:2}}></View>
         </TouchableOpacity>

@@ -1,5 +1,6 @@
 import React from 'react';
-import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage, Animated} from 'react-native';
+import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import SetContainer from '../SetContainer/SetContainer';
 import DifficultySlider from '../DifficultySlider';
 import TrackingPanel from '../TrackingPanel';

@@ -1,7 +1,7 @@
 import React from 'react';
 import {TouchableOpacity, FlatList, StyleSheet, Text, View, ScrollView, TextInput} from 'react-native';
 import Workout from '../Workout/Workout';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {loadDataIntoRedux, loadHistoryIntoRedux} from './actions';

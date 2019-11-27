@@ -1,5 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, AsyncStorage} from 'react-native';
+import {TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import Prompt from 'react-native-prompt-crossplatform';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';

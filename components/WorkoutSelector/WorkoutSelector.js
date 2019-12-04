@@ -235,6 +235,11 @@ class WorkoutSelector extends React.Component{
           title:"Scott's Shoulder 2",
           group:"Upper",
           key:'39'
+        },
+        "Romanian Deadlift":{ 
+          title:"Romanian Deadlift",
+          group:"Legs",
+          key:'40'
         }
       },
       filteredExercises: {}

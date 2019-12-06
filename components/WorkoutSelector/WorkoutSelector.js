@@ -236,10 +236,20 @@ class WorkoutSelector extends React.Component{
           group:"Upper",
           key:'39'
         },
+        "Barbell Glute Bridge":{ 
+          title:"Barbell Glute Bridge",
+          group:"Legs",
+          key:'40'
+        },
+        "Barbell Hip Thrust":{ 
+          title:"Barbell Hip Thrust",
+          group:"Legs",
+          key:'41'
+        },
         "Romanian Deadlift":{ 
           title:"Romanian Deadlift",
           group:"Legs",
-          key:'40'
+          key:'42'
         }
       },
       filteredExercises: {}

@@ -2,11 +2,13 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import WorkoutSelector from './components/WorkoutSelector/WorkoutSelector';
 import WorkoutPage from './components/WorkoutPage/WorkoutPage';
+import AddWorkoutPage from './components/AddWorkoutPage/AddWorkoutPage';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './rootReducer';
 import { composeWithDevTools } from 'remote-redux-devtools';
+
 //import { composeWithDevTools } from 'redux-devtools-extension';
 import {whyDidYouUpdate} from 'why-did-you-update';
 import logger from 'redux-logger';
@@ -24,6 +26,9 @@ const RootStack = createStackNavigator({
   Workout: {
     screen: WorkoutPage
   },
+  AddWorkout: {
+    screen: AddWorkoutPage
+  }
 });
 
 let Navigation = createAppContainer(RootStack);

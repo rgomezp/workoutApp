@@ -258,7 +258,6 @@ class WorkoutSelector extends React.Component{
 
   componentDidMount(){
     this.updateExercises();
-    console.log("mounted");
   }
 
   shouldComponentUpdate(nextProps, nextState){
@@ -369,20 +368,19 @@ class WorkoutSelector extends React.Component{
   keyExtractor = (item, index) => item.key;
 
   buildList = (iter) => {
-    console.log("mounted:", this.state);
     return (<Workout navigation={this.props.navigation} exercise={iter.item} updateExercises={this.updateExercises} workoutAction={this.state.workoutAction}/>)
   }
 
   floatingActionPress = (name) => {
     switch (name) {
       case 'bt_add':
-        // add new workout
+        this.props.navigation.navigate('AddWorkout', {title:"Add Workout"})  ;
         return;
       case 'bt_remove':
-        this.setState({workoutAction:"remove", refreshList: !this.state.refreshList});
+        // this.setState({workoutAction:"remove", refreshList: !this.state.refreshList});
         return;
       case 'bt_edit':
-        this.setState({workoutAction:"edit", refreshList: !this.state.refreshList});
+        // this.setState({workoutAction:"edit", refreshList: !this.state.refreshList});
         return;
     }
   }

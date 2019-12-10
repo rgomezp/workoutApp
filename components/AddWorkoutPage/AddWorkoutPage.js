@@ -1,13 +1,9 @@
 import React from 'react';
-import {ScrollView, Image, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage, Animated} from 'react-native';
+import {ScrollView, TouchableOpacity, StyleSheet, Text, View, TextInput, KeyboardAvoidingView, Dimensions, AsyncStorage} from 'react-native';
 import SetContainer from '../SetContainer/SetContainer';
-import DifficultySlider from '../DifficultySlider';
-import TrackingPanel from '../TrackingPanel';
-import Clock from '../Clock';
 import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
-import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 
 /*
  * WORKOUT PAGE
@@ -16,20 +12,15 @@ import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
 */
 
 var width = Dimensions.get('window').width; //full width
-var height = Dimensions.get('window').height; //full height
 
 class ActivityPage extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      userId:props.navigation.getParam('userId'),
-      title:this.props.navigation.getParam('title', "Workout"),
-      sliderVal : 0,
-      notes : "",
-      difficultyIsSet: false,
-      initialDifficulty: undefined,
+      title: "",
+      notes: "",
       isValid: false,
-      unsubListener : this.props.screenProps.store.subscribe(this.reduxListener)
+      unsubListener: this.props.screenProps.store.subscribe(this.reduxListener)
     }
   }
 
@@ -43,33 +34,21 @@ class ActivityPage extends React.Component{
     let sets = select(store.getState(), 'sets');
     let reps = select(store.getState(), 'reps');
     let weight = select(store.getState(), 'weight');
-    let difficulty = select(store.getState(), 'difficulty');
-    
-    if (difficulty && !this.state.difficultyIsSet) {
-      this.setState({initialDifficulty: difficulty, difficultyIsSet: true});
-    } else if (this.state.difficultyIsSet && difficulty !== this.state.initialDifficulty) {
-      var difficultyChanged = true;
-    }
 
     let setsAreSet = Boolean(sets || sets == "0");  
     let repsAreSet = Boolean(reps || reps == "0");  
-    let weightIsSet = Boolean(weight || weight == "0");  
+    let weightIsSet = Boolean(weight || weight == "0");
 
-    if(setsAreSet && repsAreSet && weightIsSet && difficultyChanged){
+    if(setsAreSet && repsAreSet && weightIsSet && this.titleIsSet){
       this.setState({isValid: true});
     }
   }
 
   componentDidMount() {
-    let exercise = this.props.exercises[this.state.title];
-    let historyArr = this.props.history[this.state.title];     // the exercise's history array
-    this.setState({notes: exercise.notes, historyArr});
-    activateKeepAwake();
   }
 
   componentWillUnmount() {
     this.state.unsubListener();
-    deactivateKeepAwake();
   }
   
   saveData = async(key, text) =>{
@@ -78,6 +57,11 @@ class ActivityPage extends React.Component{
     } catch (error) {
       console.log("Error saving data:", error);
     } 
+  }
+  
+  titleChange = (text) => {
+    let titleIsSet = text === "" ? false : true;
+    this.setState({title: text, titleIsSet});
   }
 
   finish() {
@@ -98,9 +82,9 @@ class ActivityPage extends React.Component{
     if (historyArr.length = 14) {
       historyArr = this.state.historyArr.slice(1);
     }
+
     historyArr.push(history);
 
-    // TO DO: only save/update if on a new workout/day (figure out later) 
     this.saveData(this.state.title+":history", JSON.stringify(historyArr));
     this.props.updateHistoryInRedux({[this.state.title]:historyArr});
 
@@ -113,20 +97,20 @@ class ActivityPage extends React.Component{
     navigate('Home');
   }
 
-  static navigationOptions = (props) => ({
-    title: props.navigation.getParam('title', "Workout")
-  });
-
   render(){
-    const {exercises} = this.props;
-    const exercise = exercises[this.state.title];
+    const exercise = {sets:'', weight:'', reps:'', difficulty:''};
     return (
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>
+          <View style={{alignSelf:'stretch', padding: 10}}>
+            <TextInput multiline={false} autoCapitalize='characters' style={{fontWeight: 'bold', color:'#4841BB', fontSize:25}}
+              onChangeText={this.titleChange} value={this.state.title} placeholder="WORKOUT NAME"
+            />
+          </View>
           {/*--------SETS---------*/}
           <SetContainer
-            exercise={}
+            exercise={exercise}
           />
           <View style={{alignSelf:'stretch', padding: 10}}>
             <Text style={{fontWeight: 'bold', color:'#4841BB'}}>Notes:</Text>

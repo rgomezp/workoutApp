@@ -374,7 +374,7 @@ class WorkoutSelector extends React.Component{
   floatingActionPress = (name) => {
     switch (name) {
       case 'bt_add':
-        this.props.navigation.navigate('AddWorkout', {title:"Add Workout"})  ;
+        this.props.navigation.navigate('AddWorkout')  ;
         return;
       case 'bt_remove':
         // this.setState({workoutAction:"remove", refreshList: !this.state.refreshList});

@@ -14,6 +14,9 @@ import {updateDataInRedux, updateHistoryInRedux} from './actions';
 var width = Dimensions.get('window').width; //full width
 
 class ActivityPage extends React.Component{
+  static navigationOptions = () => ({
+    title: "Add Workout"
+  });
   constructor(props){
     super(props);
     this.state={

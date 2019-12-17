@@ -39,16 +39,22 @@ class ActivityPage extends React.Component{
     let repsAreSet = Boolean(reps || reps == "0");  
     let weightIsSet = Boolean(weight || weight == "0");
 
-    if(setsAreSet && repsAreSet && weightIsSet && this.titleIsSet){
-      this.setState({isValid: true});
-    }
-  }
-
-  componentDidMount() {
+    this.setState({setsAreSet, repsAreSet, weightIsSet}, () => {
+      this.checkIsValid();
+    });
+    
   }
 
   componentWillUnmount() {
     this.state.unsubListener();
+  }
+
+  checkIsValid() {
+    if(this.state.setsAreSet && this.state.repsAreSet && this.state.weightIsSet && this.state.title) {
+      this.setState({isValid: true});
+    } else {
+      this.setState({isValid: false});
+    }
   }
   
   saveData = async(key, text) =>{
@@ -60,8 +66,9 @@ class ActivityPage extends React.Component{
   }
   
   titleChange = (text) => {
-    let titleIsSet = text === "" ? false : true;
-    this.setState({title: text, titleIsSet});
+    this.setState({title: text}, () => {
+      this.checkIsValid();
+    });
   }
 
   finish() {

@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
 import { activateKeepAwake, deactivateKeepAwake } from 'expo-keep-awake';
+import WorkoutHelper from '../WorkoutHelper';
 
 /*
  * WORKOUT PAGE
@@ -19,6 +20,10 @@ var width = Dimensions.get('window').width; //full width
 var height = Dimensions.get('window').height; //full height
 
 class ActivityPage extends React.Component{
+  static navigationOptions = (props) => ({
+    title: props.navigation.getParam('title', "Workout")
+  });
+
   constructor(props){
     super(props);
     this.state={
@@ -32,6 +37,35 @@ class ActivityPage extends React.Component{
       unsubListener : this.props.screenProps.store.subscribe(this.reduxListener)
     }
   }
+
+  componentDidMount() {
+    let exercise = this.props.exercises[this.state.title];
+    let historyArr = this.props.history[this.state.title];     // the exercise's history array
+    this.setState({notes: exercise.notes, historyArr});
+    activateKeepAwake();
+  }
+
+  componentWillUnmount() {
+    this.state.unsubListener();
+    deactivateKeepAwake();
+  }
+
+  saveWorkout() {
+    const historyArr = this.state.historyArr || [];
+    const payload = {
+      holdingArea : this.props.holdingArea,
+      navigation : this.props.navigation,
+      exercises : this.props.exercises,
+      updateHistoryInRedux : this.props.updateHistoryInRedux,
+      updateDataInRedux : this.props.updateDataInRedux,
+      notes : this.state.notes,
+      title : this.state.title,
+      historyArr
+    };
+
+    WorkoutHelper.saveWorkout(payload);
+  }
+
 
   reduxListener = () => {
     // Redux listener used to detect whether submission is valid
@@ -60,63 +94,6 @@ class ActivityPage extends React.Component{
     }
   }
 
-  componentDidMount() {
-    let exercise = this.props.exercises[this.state.title];
-    let historyArr = this.props.history[this.state.title];     // the exercise's history array
-    this.setState({notes: exercise.notes, historyArr});
-    activateKeepAwake();
-  }
-
-  componentWillUnmount() {
-    this.state.unsubListener();
-    deactivateKeepAwake();
-  }
-  
-  saveData = async(key, text) =>{
-    try {
-      await AsyncStorage.setItem(key, text);
-    } catch (error) {
-      console.log("Error saving data:", error);
-    } 
-  }
-
-  finish() {
-    const {navigate} = this.props.navigation;
-    const {reps} = this.props.holdingArea;
-    const {sets} = this.props.holdingArea;
-    const {weight} = this.props.holdingArea;
-    const notes = this.state.notes;
-
-    this.saveData(this.state.title+":notes", notes);
-    
-    // save to history
-    let date = new Date();
-    let difficulty = this.props.holdingArea.difficulty;
-    let history = {sets, reps, weight, difficulty, date: JSON.stringify(date)};
-    let historyArr = this.state.historyArr;
-
-    if (historyArr.length = 14) {
-      historyArr = this.state.historyArr.slice(1);
-    }
-    historyArr.push(history);
-
-    // TO DO: only save/update if on a new workout/day (figure out later) 
-    this.saveData(this.state.title+":history", JSON.stringify(historyArr));
-    this.props.updateHistoryInRedux({[this.state.title]:historyArr});
-
-    let exercises = this.props.exercises;
-    let title = this.state.title;
-    let exercise = {title, notes, reps, sets, weight, difficulty};
-    exercises[title] = exercise;
-
-    this.props.updateDataInRedux(exercises);
-    navigate('Home');
-  }
-
-  static navigationOptions = (props) => ({
-    title: props.navigation.getParam('title', "Workout")
-  });
-
   render(){
     const {exercises} = this.props;
     const exercise = exercises[this.state.title];
@@ -140,7 +117,7 @@ class ActivityPage extends React.Component{
             />
           </View>
           
-          <TouchableOpacity onPress={this.state.isValid?this.finish.bind(this):()=>{}}>
+          <TouchableOpacity onPress={this.state.isValid?this.saveWorkout.bind(this):()=>{}}>
             <View style={this.state.isValid?styles.button:styles.opaqueButton}>
               <Text style={{alignSelf:'center', color: 'white', fontWeight: 'bold'}}>SAVE</Text>
             </View>

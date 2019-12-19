@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {updateDataInRedux, updateHistoryInRedux} from './actions';
 import WorkoutHelper from '../WorkoutHelper';
+import TypePicker from './TypePicker/TypePicker';
 
 /*
  * ADD WORKOUT PAGE
@@ -86,6 +87,7 @@ class ActivityPage extends React.Component{
       <View style={styles.container}>
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={200} enabled>
         <ScrollView>
+          <TypePicker screenProps={this.props.screenProps}/>
           <View style={{alignSelf:'stretch', padding: 10}}>
             <TextInput multiline={false} autoCapitalize='characters' style={{fontWeight: 'bold', color:'#4841BB', fontSize:25}}
               onChangeText={this.titleChange} value={this.state.title} placeholder="WORKOUT NAME"

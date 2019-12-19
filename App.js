@@ -17,7 +17,7 @@ import logger from 'redux-logger';
 // whyDidYouUpdate(React, {exclude: /^YellowBox/ });
 
 // create redux store
-const store = createStore(rootReducer, applyMiddleware());
+const store = createStore(rootReducer, applyMiddleware(logger));
 
 const RootStack = createStackNavigator({
   Home:{

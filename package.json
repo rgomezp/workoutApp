@@ -14,7 +14,7 @@
   "dependencies": {
     "@expo/samples": "3.0.3",
     "@react-native-community/async-storage": "^1.5.0",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "expo": "^34.0.1",
     "expo-keep-awake": "^7.0.0",
     "react": "16.8.3",
